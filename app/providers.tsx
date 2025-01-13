@@ -6,7 +6,15 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import {
+  binanceWallet,
+  braveWallet,
+  injectedWallet,
+  krakenWallet,
+  ledgerWallet,
+  oneKeyWallet,
   rainbowWallet,
+  safeWallet,
+  trustWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -19,7 +27,18 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [rainbowWallet, walletConnectWallet],
+      wallets: [
+        injectedWallet,
+        binanceWallet,
+        braveWallet,
+        krakenWallet,
+        ledgerWallet,
+        oneKeyWallet,
+        rainbowWallet,
+        safeWallet,
+        trustWallet,
+        walletConnectWallet,
+      ],
     },
   ],
   {
@@ -32,7 +51,6 @@ const config = createConfig({
   connectors,
   chains: [
     mainnet,
-    sepolia,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,
