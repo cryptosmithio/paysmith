@@ -1,6 +1,7 @@
 'use client';
 
-import { Box, Button, Flex, Link, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Link, Stack, Text } from '@chakra-ui/react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React from 'react';
 import Logo from './Logo';
 
@@ -94,19 +95,7 @@ const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
         <MenuItem to="/how">How It works </MenuItem>
         <MenuItem to="/features">Features </MenuItem>
         <MenuItem to="/pricing">Pricing </MenuItem>
-        <MenuItem to="/signup" isLast>
-          <Button
-            size="sm"
-            rounded="md"
-            color={['primary.500', 'primary.500', 'white', 'white']}
-            bg={['white', 'white', 'primary.500', 'primary.500']}
-            _hover={{
-              bg: ['primary.100', 'primary.100', 'primary.600', 'primary.600'],
-            }}
-          >
-            Create Account
-          </Button>
-        </MenuItem>
+        <ConnectButton />
       </Stack>
     </Box>
   );
