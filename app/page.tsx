@@ -1,19 +1,14 @@
+import Dashboard from '@/components/Dashboard';
+import Footer from '@/components/Footer';
 import NavBar from '@/components/Navbar';
+import { VStack } from '@chakra-ui/react';
 
 export default function Home() {
   return (
-    <div>
+    <VStack>
       <NavBar />
-      <main>Read our docs</main>
-      <footer>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn
-        </a>
-      </footer>
-    </div>
+      <Dashboard />
+      <Footer />
+    </VStack>
   );
 }

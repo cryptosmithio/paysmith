@@ -12,7 +12,6 @@ interface Props {
 const NavBar = (props: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const { isConnected } = useAccount();
 
   return (
     <NavBarContainer {...props}>
@@ -20,12 +19,12 @@ const NavBar = (props: Props) => {
         w="100px"
         color={['white', 'white', 'primary.500', 'primary.500']}
       />
-      {isConnected && (
+      {/* {isConnected && (
         <Box>
           <MenuToggle toggle={toggle} isOpen={isOpen} />
           <MenuLinks isOpen={isOpen} />
         </Box>
-      )}
+      )} */}
       <ConnectButton />
     </NavBarContainer>
   );
@@ -98,9 +97,9 @@ const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to="/">Home</MenuItem>
-        <MenuItem to="/how">How It works </MenuItem>
-        <MenuItem to="/features">Features </MenuItem>
-        <MenuItem to="/pricing">Pricing </MenuItem>
+        <MenuItem to="/dashboard">Dashboard </MenuItem>
+        <MenuItem to="/send">Send Funds </MenuItem>
+        <MenuItem to="/receive">Receive Funds </MenuItem>
       </Stack>
     </Box>
   );
