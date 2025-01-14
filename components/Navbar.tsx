@@ -3,6 +3,7 @@
 import { Box, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React from 'react';
+import { useAccount } from 'wagmi';
 import Logo from './Logo';
 
 interface Props {
@@ -10,8 +11,8 @@ interface Props {
 }
 const NavBar = (props: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
+  const { isConnected } = useAccount();
 
   return (
     <NavBarContainer {...props}>
@@ -19,8 +20,13 @@ const NavBar = (props: Props) => {
         w="100px"
         color={['white', 'white', 'primary.500', 'primary.500']}
       />
-      <MenuToggle toggle={toggle} isOpen={isOpen} />
-      <MenuLinks isOpen={isOpen} />
+      {isConnected && (
+        <Box>
+          <MenuToggle toggle={toggle} isOpen={isOpen} />
+          <MenuLinks isOpen={isOpen} />
+        </Box>
+      )}
+      <ConnectButton />
     </NavBarContainer>
   );
 };
@@ -95,7 +101,6 @@ const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
         <MenuItem to="/how">How It works </MenuItem>
         <MenuItem to="/features">Features </MenuItem>
         <MenuItem to="/pricing">Pricing </MenuItem>
-        <ConnectButton />
       </Stack>
     </Box>
   );

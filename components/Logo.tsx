@@ -8,7 +8,7 @@ export default function Logo(props: Props) {
   return (
     <Box {...props}>
       <Text fontSize="lg" fontWeight="bold">
-        Logo
+        PaySmith
       </Text>
     </Box>
   );
