@@ -3,34 +3,47 @@
 import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
 import { Box, Input, Tabs } from '@chakra-ui/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { useAccount } from 'wagmi';
+import * as zod from 'zod';
 
 const Send = () => {
-  type SendInputs = {
-    address: string;
-    amount: string;
-  };
+  const SendFormSchema = zod.object({
+    address: zod.string().min(10, 'Address is required'),
+    amount: zod.string().min(1, 'Amount is required'),
+  });
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<SendInputs>();
+  } = useForm({
+    resolver: zodResolver(SendFormSchema),
+  });
 
-  const onSubmit: SubmitHandler<SendInputs> = data => console.log(data);
-
-  console.log(watch('address')); // watch input value by passing the name of it
-
+  const onSubmit = handleSubmit(data => {
+    console.log(errors);
+    console.log(data);
+  });
+  // watch input value by passing the name of it
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Field label="Address" errorText={errors.address?.message}>
-        <Input placeholder="0x0" {...register('address')} required />
+    <form onSubmit={onSubmit}>
+      <Field
+        label="Address"
+        invalid
+        errorText={errors.address?.message?.toString()}
+      >
+        <Input placeholder="0x0" {...register('address')} />
       </Field>
-      <Field label="Amount" errorText={errors.amount?.message}>
-        <Input placeholder="0" {...register('amount')} required />
+      <Field
+        label="Amount"
+        invalid
+        errorText={errors.amount?.message?.toString()}
+      >
+        <Input placeholder="0" {...register('amount')} />
       </Field>
       <Button type="submit">Send</Button>
     </form>
