@@ -9,8 +9,16 @@ import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { formatEther, isAddress } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
 import * as zod from 'zod';
+const exchangeRate = 3405;
 
 const Send = () => {
+  const { address } = useAccount();
+  const balance = useBalance({ address });
+
+  const maxEthAmount = balance.data
+    ? Number(formatEther(balance.data?.value))
+    : 0;
+
   const SendFormSchema = zod.object({
     address: zod
       .string()
@@ -18,12 +26,18 @@ const Send = () => {
       .refine(value => {
         return isAddress(value);
       }, 'Address must be valid Ethereum address'),
-    amount: zod.coerce.number().positive('Amount should be greater than 0'),
+    usdAmount: zod.coerce.number().positive('Amount should be greater than 0'),
+    ethAmount: zod.coerce
+      .number()
+      .positive('Amount should be greater than 0')
+      .max(maxEthAmount, 'Amount should be equal or less than your balance'),
   });
 
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(SendFormSchema),
@@ -31,55 +45,6 @@ const Send = () => {
 
   const onSubmit = handleSubmit(data => {
     console.log(data);
-  });
-
-  return (
-    <form onSubmit={onSubmit}>
-      <Field
-        label="Destination Address"
-        invalid
-        errorText={errors.address?.message?.toString()}
-      >
-        <Input placeholder="0x0" {...register('address')} />
-      </Field>
-      <Field
-        mt={2}
-        label="Amount"
-        invalid
-        errorText={errors.amount?.message?.toString()}
-      >
-        <Input placeholder="0" {...register('amount')} />
-      </Field>
-      <Button type="submit" mt={2}>
-        Send
-      </Button>
-    </form>
-  );
-};
-
-const Request = () => {
-  const { address } = useAccount();
-  const balance = useBalance({ address });
-  const maxEthAmount = balance.data
-    ? Number(formatEther(balance.data?.value))
-    : 0;
-  const receiveFormSchema = zod.object({
-    usdAmount: zod.coerce.number().positive('Amount should be greater than 0'),
-    ethAmount: zod.coerce
-      .number()
-      .positive('Amount should be greater than 0')
-      .max(maxEthAmount, 'Amount should be equal or less than your balance'),
-  });
-  const exchangeRate = 3405;
-
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-    setValue,
-  } = useForm({
-    resolver: zodResolver(receiveFormSchema),
   });
 
   const onUSDChange = () => {
@@ -101,18 +66,21 @@ const Request = () => {
       setValue('usdAmount', Number(formattedBalance) * exchangeRate);
     }
   };
-
-  const onSubmit = handleSubmit(data => {
-    console.log(data);
-  });
-
   return (
     <form onSubmit={onSubmit}>
       <Field
-        mt={2}
-        label="Requested Amount"
+        label="Destination Address"
+        invalid
+        errorText={errors.address?.message?.toString()}
+      >
+        <Input placeholder="0x0" {...register('address')} />
+      </Field>
+
+      <Field
+        label="Amount to Send"
         invalid
         errorText={errors.ethAmount?.message?.toString()}
+        my={2}
       >
         <VStack>
           <HStack w="100%">
@@ -136,7 +104,73 @@ const Request = () => {
           </HStack>
         </VStack>
       </Field>
+      <Button type="submit" mt={2}>
+        Send
+      </Button>
+    </form>
+  );
+};
 
+const Request = () => {
+  const receiveFormSchema = zod.object({
+    usdAmount: zod.coerce.number().positive('Amount should be greater than 0'),
+    ethAmount: zod.coerce.number().positive('Amount should be greater than 0'),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: zodResolver(receiveFormSchema),
+  });
+
+  const onUSDChange = () => {
+    const usdAmount = getValues('usdAmount');
+    const ethValue = usdAmount / exchangeRate;
+    setValue('ethAmount', ethValue);
+  };
+
+  const onETHChange = () => {
+    const ethAmount = getValues('ethAmount');
+    const usdValue = ethAmount * exchangeRate;
+    setValue('usdAmount', usdValue);
+  };
+
+  const onSubmit = handleSubmit(data => {
+    console.log(data);
+  });
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Field
+        label="Requested Amount"
+        invalid
+        errorText={errors.ethAmount?.message?.toString()}
+      >
+        <VStack>
+          <HStack w="100%">
+            <InputAddon>USD</InputAddon>
+            <Input
+              placeholder="0"
+              type="number"
+              {...register('usdAmount')}
+              onBlur={onUSDChange}
+            />
+          </HStack>
+          <HStack w="100%">
+            <InputAddon>ETH</InputAddon>
+            <Input
+              placeholder="0"
+              {...register('ethAmount')}
+              type="number"
+              onBlur={onETHChange}
+            />
+          </HStack>
+        </VStack>
+      </Field>
       <Button type="submit" mt={2}>
         <LuShare />
         Generate Link
