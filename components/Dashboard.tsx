@@ -2,14 +2,29 @@
 
 import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
-import { Box, HStack, Input, InputAddon, Tabs, VStack } from '@chakra-ui/react';
+import {
+  SelectContent,
+  SelectItem,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from '@/components/ui/select';
+import {
+  Box,
+  createListCollection,
+  HStack,
+  Input,
+  InputAddon,
+  Tabs,
+  VStack,
+} from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { formatEther, isAddress } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
 import * as zod from 'zod';
-const exchangeRate = 3405;
+const exchangeRate = 3405; // get from Bitcart API
 
 const Send = () => {
   const { address } = useAccount();
@@ -112,31 +127,59 @@ const Send = () => {
 };
 
 const Request = () => {
+  const linkExpiryOptions = createListCollection({
+    items: [
+      { value: '30', label: '30 minutes' },
+      { value: '60', label: '60 minutes' },
+      { value: '90', label: '90 minutes' },
+    ],
+  });
+
+  const trustPeriodOptions = createListCollection({
+    items: [
+      { value: '1', label: '1 hour' },
+      { value: '8', label: '8 hours' },
+      { value: '24', label: '24 hours' },
+      { value: '48', label: '48 hours' },
+      { value: '72', label: '72 hours' },
+      { value: 'NONE', label: 'No Limit' },
+    ],
+  });
+
   const receiveFormSchema = zod.object({
     usdAmount: zod.coerce.number().positive('Amount should be greater than 0'),
     ethAmount: zod.coerce.number().positive('Amount should be greater than 0'),
+    linkExpiry: zod.string().nonempty('Link expiry is required').array(),
+    trustPeriod: zod.string().nonempty('Trust period is required').array(),
   });
 
   const {
     register,
     handleSubmit,
     getValues,
+    control,
     formState: { errors },
     setValue,
   } = useForm({
     resolver: zodResolver(receiveFormSchema),
+    defaultValues: {
+      linkExpiry: ['60'],
+      trustPeriod: ['24'],
+      usdAmount: 0,
+      ethAmount: 0,
+    },
   });
 
   const onUSDChange = () => {
     const usdAmount = getValues('usdAmount');
     const ethValue = usdAmount / exchangeRate;
-    setValue('ethAmount', ethValue);
+    setValue('ethAmount', ethValue, { shouldValidate: true });
   };
 
   const onETHChange = () => {
     const ethAmount = getValues('ethAmount');
     const usdValue = ethAmount * exchangeRate;
-    setValue('usdAmount', usdValue);
+    setValue('usdAmount', usdValue, { shouldValidate: true });
   };
 
   const onSubmit = handleSubmit(data => {
@@ -155,7 +198,6 @@ const Request = () => {
             <InputAddon>USD</InputAddon>
             <Input
               placeholder="0"
-              type="number"
               {...register('usdAmount')}
               onBlur={onUSDChange}
             />
@@ -165,11 +207,72 @@ const Request = () => {
             <Input
               placeholder="0"
               {...register('ethAmount')}
-              type="number"
               onBlur={onETHChange}
             />
           </HStack>
         </VStack>
+      </Field>
+      <Field
+        label="Trust Period"
+        invalid
+        errorText={errors.trustPeriod?.message?.toString()}
+        my={2}
+      >
+        <Controller
+          control={control}
+          name="trustPeriod"
+          render={({ field }) => (
+            <SelectRoot
+              name={field.name}
+              value={field.value}
+              onValueChange={({ value }) => field.onChange(value)}
+              onInteractOutside={() => field.onBlur()}
+              collection={trustPeriodOptions}
+            >
+              <SelectTrigger>
+                <SelectValueText />
+              </SelectTrigger>
+              <SelectContent>
+                {trustPeriodOptions.items.map(option => (
+                  <SelectItem item={option} key={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </SelectRoot>
+          )}
+        />
+      </Field>
+      <Field
+        label="Link Expiry"
+        invalid
+        errorText={errors.linkExpiry?.message?.toString()}
+        my={2}
+      >
+        <Controller
+          control={control}
+          name="linkExpiry"
+          render={({ field }) => (
+            <SelectRoot
+              name={field.name}
+              value={field.value}
+              onValueChange={({ value }) => field.onChange(value)}
+              onInteractOutside={() => field.onBlur()}
+              collection={linkExpiryOptions}
+            >
+              <SelectTrigger>
+                <SelectValueText />
+              </SelectTrigger>
+              <SelectContent>
+                {linkExpiryOptions.items.map(option => (
+                  <SelectItem item={option} key={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </SelectRoot>
+          )}
+        />
       </Field>
       <Button type="submit" mt={2}>
         <LuShare />
