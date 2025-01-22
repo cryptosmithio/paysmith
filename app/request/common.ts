@@ -35,3 +35,9 @@ export const trustPeriodOptions = {
     label: value === 'NONE' ? 'No Limit' : value === '1' ? '1 hour' : `${value} hours`,
   })),
 };
+
+export type RequestFormServerState = {
+  message?: string;
+  fields?: Record<string, string>;
+  errors?: Record<string, string>;
+};

@@ -14,7 +14,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRef } from 'react';
+import { startTransition, useActionState, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { Button } from '../components/ui/button';
@@ -28,6 +28,7 @@ import {
 
 const RequestFundsForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
+  const [serverState, formAction] = useActionState(requestFundsAction, {});
   const {
     register,
     getValues,
@@ -64,7 +65,7 @@ const RequestFundsForm = () => {
     console.log(data);
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      requestFundsAction(formData);
+      startTransition(() => formAction(formData));
     }
   };
 
@@ -73,7 +74,6 @@ const RequestFundsForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)} //allows client side validation
-      action={requestFundsAction} //allows server side validation
       ref={formRef}
     >
       <Field
