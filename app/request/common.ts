@@ -8,12 +8,14 @@ const trustPeriodValues = ['1', '8', '24', '48', '72', 'NONE'] as const;
 export const RequestFormSchema = zod.object({
   usdAmount: zod.coerce.number().positive('Amount should be greater than 0'),
   ethAmount: zod.coerce.number().positive('Amount should be greater than 0'),
-  linkExpiry: zod.string().nonempty('Link expiry is required').array(),
-  trustPeriod: zod.string().nonempty('Trust period is required').array(),
+  linkExpirySelect: zod.string().nonempty('Link expiry is required').array(),
+  trustPeriodSelect: zod.string().nonempty('Trust period is required').array(),
+  trustPeriod: zod.string().nonempty('Trust period is required'),
+  linkExpiry: zod.string().nonempty('Link expiry is required'),
 });
 
 export const RequestDataSchema = zod.object({
-  ethAmount: zod.number().positive('Amount should be greater than 0'),
+  ethAmount: zod.coerce.number().positive('Amount should be greater than 0'),
   linkExpiry: zod.enum(linkExpiryValues),
   trustPeriod: zod.enum(trustPeriodValues),
 });

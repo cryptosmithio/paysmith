@@ -38,8 +38,10 @@ const RequestFundsForm = () => {
   } = useForm<RequestFormSchemaType>({
     resolver: zodResolver(RequestFormSchema),
     defaultValues: {
-      linkExpiry: ['60'],
-      trustPeriod: ['24'],
+      linkExpirySelect: ['60'],
+      trustPeriodSelect: ['24'],
+      trustPeriod: '24',
+      linkExpiry: '60',
       usdAmount: 0,
       ethAmount: 0,
     },
@@ -101,17 +103,20 @@ const RequestFundsForm = () => {
       <Field
         label="Trust Period"
         invalid
-        errorText={errors.trustPeriod?.message?.toString()}
+        errorText={errors.trustPeriodSelect?.message?.toString()}
         my={2}
       >
         <Controller
           control={control}
-          name="trustPeriod"
+          name="trustPeriodSelect"
           render={({ field }) => (
             <SelectRoot
               name={field.name}
               value={field.value}
-              onValueChange={({ value }) => field.onChange(value)}
+              onValueChange={({ value }) => {
+                setValue('trustPeriod', value[0]);
+                field.onChange(value);
+              }}
               onInteractOutside={() => field.onBlur()}
               collection={trustPeriodList}
             >
@@ -129,20 +134,24 @@ const RequestFundsForm = () => {
           )}
         />
       </Field>
+      <input type="hidden" {...register('trustPeriod')} />
       <Field
         label="Link Expiry"
         invalid
-        errorText={errors.linkExpiry?.message?.toString()}
+        errorText={errors.linkExpirySelect?.message?.toString()}
         my={2}
       >
         <Controller
           control={control}
-          name="linkExpiry"
+          name="linkExpirySelect"
           render={({ field }) => (
             <SelectRoot
               name={field.name}
               value={field.value}
-              onValueChange={({ value }) => field.onChange(value)}
+              onValueChange={({ value }) => {
+                setValue('linkExpiry', value[0]);
+                field.onChange(value);
+              }}
               onInteractOutside={() => field.onBlur()}
               collection={linkExpiryList}
             >
@@ -160,6 +169,7 @@ const RequestFundsForm = () => {
           )}
         />
       </Field>
+      <input type="hidden" {...register('linkExpiry')} />
       <Button type="submit" mt={2}>
         <LuShare />
         Generate Link
