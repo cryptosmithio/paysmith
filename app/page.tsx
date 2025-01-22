@@ -1,6 +1,6 @@
-import Dashboard from '@/components/Dashboard';
-import Footer from '@/components/Footer';
-import NavBar from '@/components/Navbar';
+import Dashboard from '@/app/components/Dashboard';
+import Footer from '@/app/components/Footer';
+import NavBar from '@/app/components/Navbar';
 import { VStack } from '@chakra-ui/react';
 
 export default function Home() {

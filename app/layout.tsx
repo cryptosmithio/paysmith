@@ -1,4 +1,3 @@
-import { Provider } from '@/components/ui/provider';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { Metadata } from 'next';
 import { Providers } from './providers';
@@ -16,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Provider>
-          <Providers>{children}</Providers>
-        </Provider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

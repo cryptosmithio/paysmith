@@ -3,16 +3,12 @@
 import { Box, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React from 'react';
-import { useAccount } from 'wagmi';
 import Logo from './Logo';
 
 interface Props {
   children?: React.ReactNode;
 }
 const NavBar = (props: Props) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const toggle = () => setIsOpen(!isOpen);
-
   return (
     <NavBarContainer {...props}>
       <Logo
