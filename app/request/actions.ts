@@ -17,7 +17,8 @@ export async function requestFundsAction(data: FormData) {
 
   console.log(parsedData);
 
-  // return {
-  //   message: 'Funds requested successfully',
-  // };
+  return {
+    message: 'Funds requested successfully',
+    status: 'success',
+  };
 }

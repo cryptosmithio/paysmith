@@ -1019,9 +1019,9 @@
     viem "^2.1.1"
 
 "@safe-global/safe-gateway-typescript-sdk@^3.5.3":
-  version "3.22.6"
-  resolved "https://registry.yarnpkg.com/@safe-global/safe-gateway-typescript-sdk/-/safe-gateway-typescript-sdk-3.22.6.tgz#3a4961d129fefc7b9eb75e34b7660863580649ff"
-  integrity sha512-R0Ck7n8fj7KtFUpbsGi0j3e2t0/bhpHTY/U8P8315vQ8aT/sfZrWMcfFcD5I9Kw8TEU7rvKY0+sngT1lCptJmQ==
+  version "3.22.7"
+  resolved "https://registry.yarnpkg.com/@safe-global/safe-gateway-typescript-sdk/-/safe-gateway-typescript-sdk-3.22.7.tgz#ed94be8f7e1b1751f14679c0c289496ee3f5b7a3"
+  integrity sha512-r1OML6y1oBL6E5ZADg9smzvVzOOgsTLfRXYuT/7fW1Eqg2nJKcALoLLfH6sJAcHvobHUZXcjxKPINDwNJq0N9g==
 
 "@scure/base@^1.1.3", "@scure/base@~1.2.1", "@scure/base@~1.2.2", "@scure/base@~1.2.4":
   version "1.2.4"
@@ -1274,12 +1274,12 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-2.1.0.tgz#052aa67a48eccc4309d7f0191b7e41434b90bb78"
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
-"@types/node@^20":
-  version "20.17.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.17.14.tgz#579e7d75eeb5d46b75c73c98821639e64b689608"
-  integrity sha512-w6qdYetNL5KRBiSClK/KWai+2IMEJuAj+EujKCumalFOwXtvOXaEan9AuwcRID2IcOIAWSIfR495hBtgKlx2zg==
+"@types/node@^22.10.7":
+  version "22.10.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.7.tgz#14a1ca33fd0ebdd9d63593ed8d3fbc882a6d28d7"
+  integrity sha512-V09KvXxFiutGp6B7XkpaDXlNadZxrzajcY50EuoLIpQ6WWYCSvf19lVIazzfIzQvhUN2HjX12spLojTnhuKlGg==
   dependencies:
-    undici-types "~6.19.2"
+    undici-types "~6.20.0"
 
 "@types/parse-json@^4.0.0":
   version "4.0.2"
@@ -1419,10 +1419,10 @@
   resolved "https://registry.yarnpkg.com/@vanilla-extract/sprinkles/-/sprinkles-1.6.3.tgz#733968d653cc2395538b5c29f04dcdb0a2ca15c5"
   integrity sha512-oCHlQeYOBIJIA2yWy2GnY5wE2A7hGHDyJplJo4lb+KEIBcJWRnDJDg8ywDwQS5VfWJrBBO3drzYZPFpWQjAMiQ==
 
-"@wagmi/connectors@5.7.4":
-  version "5.7.4"
-  resolved "https://registry.yarnpkg.com/@wagmi/connectors/-/connectors-5.7.4.tgz#43a5cf48798cb3ae97be9987f7075a0be162faa2"
-  integrity sha512-ubecKH0grfkfjTB17l1V6Gj4SCMTvCtie7Bq0oQdjqA3Z7zf+F/RAwZoehxkPnSyeK6pFotUlUSr82J3bNhPqA==
+"@wagmi/connectors@5.7.5":
+  version "5.7.5"
+  resolved "https://registry.yarnpkg.com/@wagmi/connectors/-/connectors-5.7.5.tgz#59c4d3abfcb342aa4640749c7a0dcf96dcd5089d"
+  integrity sha512-btqHHUSTzg4BZe9at/7SnRPv4cz8O3pisbeZBh0qxKz7PVm+9vRxY0bSala3xQPDcS0PRTB30Vn/+lM73GCjbw==
   dependencies:
     "@coinbase/wallet-sdk" "4.2.3"
     "@metamask/sdk" "0.31.5"
@@ -2824,10 +2824,10 @@ cross-spawn@^7.0.6:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-crossws@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/crossws/-/crossws-0.3.1.tgz#7980e0b6688fe23286661c3ab8deeccbaa05ca86"
-  integrity sha512-HsZgeVYaG+b5zA+9PbIPGq4+J/CJynJuearykPsXx4V/eMhyQ5EDVg3Ak2FBZtVXCiOLu/U7IiwDHTr9MA+IKw==
+crossws@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/crossws/-/crossws-0.3.2.tgz#dff68797e4e6b5c47f29c7827475854a7ba14492"
+  integrity sha512-S2PpQHRcgYABOS2465b34wqTOn5dbLL+iSvyweJYGGFLDsKq88xrjDXUiEhfYkhWZq1HuS6of3okRHILbkrqxw==
   dependencies:
     uncrypto "^0.1.3"
 
@@ -3739,12 +3739,12 @@ graphemer@^1.4.0:
   integrity sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==
 
 h3@^1.13.0:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/h3/-/h3-1.13.1.tgz#915966340b0b0ebeca1acc39bd2ecae08ae331f6"
-  integrity sha512-u/z6Z4YY+ANZ05cRRfsFJadTBrNA6e3jxdU+AN5UCbZSZEUwgHiwjvUEe0k1NoQmAvQmETwr+xB5jd7mhCJuIQ==
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/h3/-/h3-1.14.0.tgz#292bf0602444b36fd6b333b1d6872d685ecc9899"
+  integrity sha512-ao22eiONdgelqcnknw0iD645qW0s9NnrJHr5OBz4WOMdBdycfSas1EQf1wXRsm+PcB2Yoj43pjBPwqIpJQTeWg==
   dependencies:
     cookie-es "^1.2.2"
-    crossws "^0.3.1"
+    crossws "^0.3.2"
     defu "^6.1.4"
     destr "^2.0.3"
     iron-webcrypto "^1.2.1"
@@ -4437,9 +4437,9 @@ node-addon-api@^2.0.0:
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
 node-fetch-native@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/node-fetch-native/-/node-fetch-native-1.6.4.tgz#679fc8fd8111266d47d7e72c379f1bed9acff06e"
-  integrity sha512-IhOigYzAKHd244OC0JIMIUrjzctirCmPkaIfhDeGcEETWof5zKYUW7e7MYvChGWh/4CJeXEgsRyGzuF334rOOQ==
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/node-fetch-native/-/node-fetch-native-1.6.6.tgz#ae1d0e537af35c2c0b0de81cbff37eedd410aa37"
+  integrity sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==
 
 node-fetch@^2.7.0:
   version "2.7.0"
@@ -5571,10 +5571,10 @@ uncrypto@^0.1.3:
   resolved "https://registry.yarnpkg.com/uncrypto/-/uncrypto-0.1.3.tgz#e1288d609226f2d02d8d69ee861fa20d8348ef2b"
   integrity sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==
 
-undici-types@~6.19.2:
-  version "6.19.8"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.8.tgz#35111c9d1437ab83a7cdc0abae2f26d88eda0a02"
-  integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
+undici-types@~6.20.0:
+  version "6.20.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.20.0.tgz#8171bf22c1f588d1554d55bf204bc624af388433"
+  integrity sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==
 
 unenv@^1.10.0:
   version "1.10.0"
@@ -5679,21 +5679,7 @@ valtio@1.11.2:
     proxy-compare "2.5.1"
     use-sync-external-store "1.2.0"
 
-viem@^2.1.1:
-  version "2.22.10"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-2.22.10.tgz#64fdfdc6ded7e9f372da0caf30f781aca517b24a"
-  integrity sha512-amYq+bxD3k9gUx4JXzKtpKrnw1Mc3f4s32g6Axo8twpum+47r+9M2g+qh63gzrs0goTTVUsmg3n9ev+zELKRDw==
-  dependencies:
-    "@noble/curves" "1.7.0"
-    "@noble/hashes" "1.6.1"
-    "@scure/bip32" "1.6.0"
-    "@scure/bip39" "1.5.0"
-    abitype "1.0.7"
-    isows "1.0.6"
-    ox "0.6.5"
-    ws "8.18.0"
-
-viem@^2.22.7:
+viem@^2.1.1, viem@^2.22.7:
   version "2.22.11"
   resolved "https://registry.yarnpkg.com/viem/-/viem-2.22.11.tgz#e8e937980e11688a79559419882347754bb0d009"
   integrity sha512-r86JkRcE8GVTRKBZADkT01EbmIAkjqJE3xcgeIk1AznKYE/KQfuaki8vZwaOoqQd5jqVZ7m5kGtFFsRe6LEWrg==
@@ -5708,11 +5694,11 @@ viem@^2.22.7:
     ws "8.18.0"
 
 wagmi@^2.14.7:
-  version "2.14.8"
-  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-2.14.8.tgz#581e66b1eb82bf4e8a5d8661818ed5c8b9331942"
-  integrity sha512-m7oMF/rqsTwYuBZzwyYskzhdkZxq6zJjY2le6Vz7We5Hih7hwJ7hLNU5TxMfhqjPRfsqXlWX9HLOszOipHxz8Q==
+  version "2.14.9"
+  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-2.14.9.tgz#44c47ac6fc119e5ce40bee2c4e4dd5069a0d651a"
+  integrity sha512-nDJ5hwPaiVpn/8Bi82m5K4BCqDiOSnOV976p/jKXt0svQABGdAxUxej0UgDRoVlrp+NutmejN+SyQKmhV477/A==
   dependencies:
-    "@wagmi/connectors" "5.7.4"
+    "@wagmi/connectors" "5.7.5"
     "@wagmi/core" "2.16.3"
     use-sync-external-store "1.4.0"
 
