@@ -21,6 +21,6 @@ export function parseFormData<T extends z.ZodTypeAny>(prevState: ServerFormState
       errors: errors,
       success: result.success,
     } as ServerFormStateType,
-    parsedData: result.data as T,
+    parsedData: result.data
   };
 }
