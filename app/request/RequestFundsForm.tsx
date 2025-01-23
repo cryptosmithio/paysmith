@@ -1,6 +1,7 @@
 'use client';
 
 import { Field } from '@/app/components/ui/field';
+import type { FormServerStateType } from '@/lib/util';
 import {
   createListCollection,
   HStack,
@@ -25,7 +26,6 @@ import {
   trustPeriodOptions,
   type RequestFormSchemaType,
 } from './common';
-import type { FormServerStateType } from '@/lib/util';
 
 const RequestFundsForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -67,8 +67,7 @@ const RequestFundsForm = () => {
     setValue('usdAmount', usdValue, { shouldValidate: true });
   };
 
-  const onSubmit = (data: RequestFormSchemaType) => {
-    console.log(data);
+  const onSubmit = () => {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       startTransition(() => formAction(formData));

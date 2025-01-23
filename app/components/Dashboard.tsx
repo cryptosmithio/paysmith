@@ -3,8 +3,8 @@
 import { Box, Tabs } from '@chakra-ui/react';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { useAccount } from 'wagmi';
-import RequestForm from '../request/Form';
-import SendForm from '../send/SendForm';
+import RequestForm from '../request/RequestFundsForm';
+import SendForm from '../send/SendFundsForm';
 const Transactions = () => {
   return <Box>Transactions</Box>;
 };

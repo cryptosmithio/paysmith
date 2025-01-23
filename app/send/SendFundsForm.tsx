@@ -2,16 +2,26 @@
 
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
-import { SendFormSchema, type SendFormSchemaType } from '@/app/send/schemas';
+import { SendFormSchema, type SendFormSchemaType } from '@/app/send/common';
+import type { FormServerStateType } from '@/lib/util';
 import { HStack, Input, InputAddon, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { startTransition, useActionState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { formatEther } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
+import { sendFundsAction } from './actions';
 
 const exchangeRate = 3405; // get from Bitcart API
 
 const SendFundsForm = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [serverState, formAction] = useActionState(sendFundsAction, {
+    message: '',
+    fields: {},
+    errors: {},
+    success: false,
+  } as FormServerStateType);
   const { address } = useAccount();
   const balance = useBalance({ address });
 
@@ -35,35 +45,46 @@ const SendFundsForm = () => {
     resolver: zodResolver(schemaEthAmount),
   });
 
-  const onSubmit = handleSubmit(data => {
-    console.log(data);
-  });
-
   const onUSDChange = () => {
     const usdAmount = getValues('usdAmount');
     const ethValue = usdAmount / exchangeRate;
-    setValue('ethAmount', ethValue);
+    setValue('ethAmount', ethValue, { shouldValidate: true });
   };
 
   const onETHChange = () => {
     const ethAmount = getValues('ethAmount');
     const usdValue = ethAmount * exchangeRate;
-    setValue('usdAmount', usdValue);
+    setValue('usdAmount', usdValue, { shouldValidate: true });
+  };
+
+  const onSubmit = () => {
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+      startTransition(() => formAction(formData));
+    }
   };
 
   const onMaxClick = () => {
     if (balance.data) {
       const formattedBalance = formatEther(balance.data.value);
-      setValue('ethAmount', Number(formattedBalance));
-      setValue('usdAmount', Number(formattedBalance) * exchangeRate);
+      setValue('ethAmount', Number(formattedBalance), { shouldValidate: true });
+      setValue('usdAmount', Number(formattedBalance) * exchangeRate, {
+        shouldValidate: true,
+      });
     }
   };
   return (
-    <form onSubmit={onSubmit}>
+    <form
+      onSubmit={handleSubmit(onSubmit)} //allows client side validation
+      ref={formRef}
+    >
       <Field
         label="Destination Address"
         invalid
-        errorText={errors.address?.message?.toString()}
+        errorText={
+          errors.address?.message?.toString() ||
+          serverState.errors.address?.toString()
+        }
       >
         <Input placeholder="0x0" {...register('address')} />
       </Field>
@@ -71,7 +92,10 @@ const SendFundsForm = () => {
       <Field
         label="Amount to Send"
         invalid
-        errorText={errors.ethAmount?.message?.toString()}
+        errorText={
+          errors.ethAmount?.message?.toString() ||
+          serverState.errors.ethAmount?.toString()
+        }
         my={2}
       >
         <VStack>
@@ -79,7 +103,6 @@ const SendFundsForm = () => {
             <InputAddon>USD</InputAddon>
             <Input
               placeholder="0"
-              type="number"
               {...register('usdAmount')}
               onBlur={onUSDChange}
             />
@@ -89,7 +112,6 @@ const SendFundsForm = () => {
             <Input
               placeholder="0"
               {...register('ethAmount')}
-              type="number"
               onBlur={onETHChange}
             />
             <Button onClick={onMaxClick}>Max</Button>
