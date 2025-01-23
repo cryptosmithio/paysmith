@@ -1,7 +1,8 @@
 'use client';
 
+import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
-import type { FormServerStateType } from '@/lib/util';
+import type { ServerFormStateType } from '@/lib/util';
 import {
   createListCollection,
   HStack,
@@ -18,7 +19,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { startTransition, useActionState, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
-import { Button } from '../components/ui/button';
 import { requestFundsAction } from './actions';
 import {
   linkExpiryOptions,
@@ -34,7 +34,7 @@ const RequestFundsForm = () => {
     fields: {},
     errors: {},
     success: false,
-  } as FormServerStateType);
+  } as ServerFormStateType);
   const {
     register,
     getValues,

@@ -1,13 +1,13 @@
 import type { z } from "zod";
 
-export type FormServerStateType = {
+export type ServerFormStateType = {
   message: string;
   fields: Record<string, string>;
   errors: Record<string, string>;
   success: boolean;
 };
 
-export function parseFormData<T extends z.ZodTypeAny>(prevState: FormServerStateType, data: FormData, dataSchema: T) {
+export function parseFormData<T extends z.ZodTypeAny>(prevState: ServerFormStateType, data: FormData, dataSchema: T) {
   const formData = Object.fromEntries(data);
   const result = dataSchema.safeParse(formData) as z.infer<T>;
   const zodErrors = result.error?.flatten();
@@ -20,7 +20,7 @@ export function parseFormData<T extends z.ZodTypeAny>(prevState: FormServerState
       fields: formData,
       errors: errors,
       success: result.success,
-    } as FormServerStateType,
+    } as ServerFormStateType,
     parsedData: result.data as T,
   };
 }
