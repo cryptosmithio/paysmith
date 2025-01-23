@@ -1,9 +1,7 @@
 'use server';
 
-import { parseFormData, type ServerFormStateType } from '@/lib/util';
+import { parseFormData, type ServerFormStateType } from '@/lib/formUtil';
 import { RequestDataSchema, type RequestDataSchemaType } from './common';
-
-// Ensure that RequestDataSchema includes trustPeriod
 
 export async function requestFundsAction(prevState: ServerFormStateType, data: FormData) {
   const { nextState, parsedData } = parseFormData(prevState, data, RequestDataSchema);

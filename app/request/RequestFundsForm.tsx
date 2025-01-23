@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
-import type { ServerFormStateType } from '@/lib/util';
+import type { ServerFormStateType } from '@/lib/formUtil';
 import {
   createListCollection,
   HStack,

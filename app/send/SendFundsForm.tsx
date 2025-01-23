@@ -3,7 +3,7 @@
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
 import { SendFormSchema, type SendFormSchemaType } from '@/app/send/common';
-import type { ServerFormStateType } from '@/lib/util';
+import type { ServerFormStateType } from '@/lib/formUtil';
 import { HStack, Input, InputAddon, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { startTransition, useActionState, useRef } from 'react';
