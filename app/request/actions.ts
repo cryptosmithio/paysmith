@@ -1,13 +1,12 @@
 'use server';
 
-import { RequestDataSchema, type RequestFormServerState } from "./common";
+import { parseFormData, type FormServerStateType } from '@/lib/util';
+import { RequestDataSchema } from './common';
 
-export async function requestFundsAction(prevState: RequestFormServerState, data: FormData) {
-  console.log(data);
-  const formData = Object.fromEntries(data);
-  const parsedData = RequestDataSchema.parse(formData);
+export async function requestFundsAction(prevState: FormServerStateType, data: FormData) {
+  const { nextState, parsedData } = parseFormData(prevState, data, RequestDataSchema);
 
   console.log(parsedData);
 
-  return prevState;
+  return nextState;
 }

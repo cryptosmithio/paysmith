@@ -12,15 +12,17 @@ export const RequestFormSchema = zod.object({
   trustPeriodSelect: zod.string().nonempty('Trust period is required').array(),
   trustPeriod: zod.string().nonempty('Trust period is required'),
   linkExpiry: zod.string().nonempty('Link expiry is required'),
-});
+}); // Client side validation
 
 export const RequestDataSchema = zod.object({
   ethAmount: zod.coerce.number().positive('Amount should be greater than 0'),
   linkExpiry: zod.enum(linkExpiryValues),
   trustPeriod: zod.enum(trustPeriodValues),
-});
+});  // Server side validation
 
 export type RequestFormSchemaType = zod.infer<typeof RequestFormSchema>;
+
+export type RequestDataSchemaType = zod.infer<typeof RequestDataSchema>;
 
 export const linkExpiryOptions = {
   items: linkExpiryValues.map(value => ({
@@ -34,10 +36,4 @@ export const trustPeriodOptions = {
     value,
     label: value === 'NONE' ? 'No Limit' : value === '1' ? '1 hour' : `${value} hours`,
   })),
-};
-
-export type RequestFormServerState = {
-  message?: string;
-  fields?: Record<string, string>;
-  errors?: Record<string, string>;
 };

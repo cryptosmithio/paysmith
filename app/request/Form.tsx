@@ -25,10 +25,16 @@ import {
   trustPeriodOptions,
   type RequestFormSchemaType,
 } from './common';
+import type { FormServerStateType } from '@/lib/util';
 
 const RequestFundsForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [serverState, formAction] = useActionState(requestFundsAction, {});
+  const [serverState, formAction] = useActionState(requestFundsAction, {
+    message: '',
+    fields: {},
+    errors: {},
+    success: false,
+  } as FormServerStateType);
   const {
     register,
     getValues,
@@ -79,7 +85,10 @@ const RequestFundsForm = () => {
       <Field
         label="Requested Amount"
         invalid
-        errorText={errors.ethAmount?.message?.toString()}
+        errorText={
+          errors.ethAmount?.message?.toString() ||
+          serverState.errors.ethAmount?.toString()
+        }
       >
         <VStack>
           <HStack w="100%">
@@ -103,7 +112,10 @@ const RequestFundsForm = () => {
       <Field
         label="Trust Period"
         invalid
-        errorText={errors.trustPeriodSelect?.message?.toString()}
+        errorText={
+          errors.trustPeriodSelect?.message?.toString() ||
+          serverState.errors.trustPeriod?.toString()
+        }
         my={2}
       >
         <Controller
@@ -138,7 +150,10 @@ const RequestFundsForm = () => {
       <Field
         label="Link Expiry"
         invalid
-        errorText={errors.linkExpirySelect?.message?.toString()}
+        errorText={
+          errors.linkExpirySelect?.message?.toString() ||
+          serverState.errors.linkExpiry?.toString()
+        }
         my={2}
       >
         <Controller
