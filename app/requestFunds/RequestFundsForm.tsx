@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
 import type { ServerFormStateType } from '@/lib/formUtil';
@@ -13,21 +12,24 @@ import {
   SelectRoot,
   SelectTrigger,
   SelectValueText,
+  Textarea,
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { startTransition, useActionState, useRef } from 'react';
+import React, { startTransition, useActionState, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
+import { useAccount, useEnsName } from 'wagmi';
 import { requestFundsAction } from './actions';
+import { LinkExpiryOptions, TrustPeriodOptions } from './constants';
 import {
-  linkExpiryOptions,
-  RequestFormSchema,
-  trustPeriodOptions,
-  type RequestFormSchemaType,
-} from './common';
+  RequestFundsFormSchema,
+  type RequestFundsFormSchemaType,
+} from './schemas';
 
 const RequestFundsForm = () => {
+  const { address } = useAccount();
+
   const formRef = useRef<HTMLFormElement>(null);
   const [serverState, formAction] = useActionState(requestFundsAction, {
     message: '',
@@ -41,9 +43,10 @@ const RequestFundsForm = () => {
     control,
     formState: { errors },
     setValue,
+    setFocus,
     handleSubmit,
-  } = useForm<RequestFormSchemaType>({
-    resolver: zodResolver(RequestFormSchema),
+  } = useForm<RequestFundsFormSchemaType>({
+    resolver: zodResolver(RequestFundsFormSchema),
     defaultValues: {
       linkExpirySelect: ['60'],
       trustPeriodSelect: ['24'],
@@ -51,6 +54,7 @@ const RequestFundsForm = () => {
       linkExpiry: '60',
       usdAmount: 0,
       ethAmount: 0,
+      paymentAddress: address,
     },
     progressive: true,
   });
@@ -74,16 +78,46 @@ const RequestFundsForm = () => {
     }
   };
 
-  const linkExpiryList = createListCollection(linkExpiryOptions);
-  const trustPeriodList = createListCollection(trustPeriodOptions);
+  const linkExpiryList = createListCollection(LinkExpiryOptions);
+  const trustPeriodList = createListCollection(TrustPeriodOptions);
+
+  React.useEffect(() => {
+    setFocus('ethAmount');
+  });
+
+  const { data: ensName } = useEnsName({ address });
+  if (ensName) {
+    setValue('paymentName', ensName);
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)} //allows client side validation
       ref={formRef}
     >
       <Field
-        label="Requested Amount"
+        label="Recipient Address"
+        errorText={
+          errors.paymentAddress?.message?.toString() ||
+          serverState.errors.paymentAddress?.toString()
+        }
+      >
+        <Input {...register('paymentAddress')} disabled />
+      </Field>
+      <Field
+        label="Recipient Name"
+        mt={2}
+        errorText={
+          errors.paymentName?.message?.toString() ||
+          serverState.errors.paymentName?.toString()
+        }
+      >
+        <Input {...register('paymentName')} />
+      </Field>
+      <Field
+        label="Amount"
         invalid
+        mt={2}
         errorText={
           errors.ethAmount?.message?.toString() ||
           serverState.errors.ethAmount?.toString()
@@ -109,8 +143,18 @@ const RequestFundsForm = () => {
         </VStack>
       </Field>
       <Field
+        label="Notes"
+        mt={2}
+        errorText={
+          errors.notes?.message?.toString() ||
+          serverState.errors.notes?.toString()
+        }
+      >
+        <Textarea {...register('notes')} />
+      </Field>
+
+      <Field
         label="Trust Period"
-        invalid
         errorText={
           errors.trustPeriodSelect?.message?.toString() ||
           serverState.errors.trustPeriod?.toString()
@@ -125,7 +169,10 @@ const RequestFundsForm = () => {
               name={field.name}
               value={field.value}
               onValueChange={({ value }) => {
-                setValue('trustPeriod', value[0]);
+                setValue(
+                  'trustPeriod',
+                  value[0] as '1' | '8' | '24' | '48' | '72' | 'NONE'
+                );
                 field.onChange(value);
               }}
               onInteractOutside={() => field.onBlur()}
@@ -135,7 +182,7 @@ const RequestFundsForm = () => {
                 <SelectValueText />
               </SelectTrigger>
               <SelectContent>
-                {trustPeriodOptions.items.map(option => (
+                {TrustPeriodOptions.items.map(option => (
                   <SelectItem item={option} key={option.value}>
                     {option.label}
                   </SelectItem>
@@ -148,7 +195,6 @@ const RequestFundsForm = () => {
       <input type="hidden" {...register('trustPeriod')} />
       <Field
         label="Link Expiry"
-        invalid
         errorText={
           errors.linkExpirySelect?.message?.toString() ||
           serverState.errors.linkExpiry?.toString()
@@ -163,7 +209,7 @@ const RequestFundsForm = () => {
               name={field.name}
               value={field.value}
               onValueChange={({ value }) => {
-                setValue('linkExpiry', value[0]);
+                setValue('linkExpiry', value[0] as '30' | '60' | '90' | '180');
                 field.onChange(value);
               }}
               onInteractOutside={() => field.onBlur()}
@@ -173,7 +219,7 @@ const RequestFundsForm = () => {
                 <SelectValueText />
               </SelectTrigger>
               <SelectContent>
-                {linkExpiryOptions.items.map(option => (
+                {LinkExpiryOptions.items.map(option => (
                   <SelectItem item={option} key={option.value}>
                     {option.label}
                   </SelectItem>
