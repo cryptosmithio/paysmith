@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
+import { CurrencyType } from '@/lib/constants';
 import type { ServerFormStateType } from '@/lib/formUtil';
 import {
   createListCollection,
@@ -16,7 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { startTransition, useActionState, useRef } from 'react';
+import { startTransition, useActionState, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsName } from 'wagmi';
@@ -41,9 +42,8 @@ const RequestFundsForm = () => {
     register,
     getValues,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
-    setFocus,
     handleSubmit,
   } = useForm<RequestFundsFormSchemaType>({
     resolver: zodResolver(RequestFundsFormSchema),
@@ -53,8 +53,9 @@ const RequestFundsForm = () => {
       trustPeriod: '24',
       linkExpiry: '60',
       usdAmount: 0,
-      ethAmount: 0,
+      amount: 0,
       paymentAddress: address,
+      currency: CurrencyType.ETH,
     },
     progressive: true,
   });
@@ -62,12 +63,12 @@ const RequestFundsForm = () => {
   const onUSDChange = () => {
     const usdAmount = getValues('usdAmount');
     const ethValue = usdAmount / exchangeRate;
-    setValue('ethAmount', ethValue, { shouldValidate: true });
+    setValue('amount', ethValue, { shouldValidate: true });
   };
 
   const onETHChange = () => {
-    const ethAmount = getValues('ethAmount');
-    const usdValue = ethAmount * exchangeRate;
+    const amount = getValues('amount');
+    const usdValue = amount * exchangeRate;
     setValue('usdAmount', usdValue, { shouldValidate: true });
   };
 
@@ -80,10 +81,6 @@ const RequestFundsForm = () => {
 
   const linkExpiryList = createListCollection(LinkExpiryOptions);
   const trustPeriodList = createListCollection(TrustPeriodOptions);
-
-  React.useEffect(() => {
-    setFocus('ethAmount');
-  });
 
   const { data: ensName } = useEnsName({ address });
   if (ensName) {
@@ -102,7 +99,7 @@ const RequestFundsForm = () => {
           serverState.errors.paymentAddress?.toString()
         }
       >
-        <Input {...register('paymentAddress')} disabled />
+        <Input {...register('paymentAddress')} readOnly />
       </Field>
       <Field
         label="Recipient Name"
@@ -119,25 +116,25 @@ const RequestFundsForm = () => {
         invalid
         mt={2}
         errorText={
-          errors.ethAmount?.message?.toString() ||
-          serverState.errors.ethAmount?.toString()
+          errors.amount?.message?.toString() ||
+          serverState.errors.amount?.toString()
         }
       >
         <VStack>
+          <HStack w="100%">
+            <InputAddon>ETH</InputAddon>
+            <Input
+              placeholder="0"
+              {...register('amount')}
+              onBlur={onETHChange}
+            />
+          </HStack>
           <HStack w="100%">
             <InputAddon>USD</InputAddon>
             <Input
               placeholder="0"
               {...register('usdAmount')}
               onBlur={onUSDChange}
-            />
-          </HStack>
-          <HStack w="100%">
-            <InputAddon>ETH</InputAddon>
-            <Input
-              placeholder="0"
-              {...register('ethAmount')}
-              onBlur={onETHChange}
             />
           </HStack>
         </VStack>
@@ -152,7 +149,6 @@ const RequestFundsForm = () => {
       >
         <Textarea {...register('notes')} />
       </Field>
-
       <Field
         label="Trust Period"
         errorText={
@@ -230,7 +226,7 @@ const RequestFundsForm = () => {
         />
       </Field>
       <input type="hidden" {...register('linkExpiry')} />
-      <Button type="submit" mt={2}>
+      <Button type="submit" mt={2} disabled={isSubmitting}>
         <LuShare />
         Generate Link
       </Button>

@@ -101,7 +101,7 @@ export const finalizeSchema = z.object({
 
 export const moneySchema = z.object({
   amount: z.number().min(0).default(0),
-  currency: z.nativeEnum(CurrencyType).default(CurrencyType.USD)
+  currency: z.nativeEnum(CurrencyType).default(CurrencyType.ETH)
 });
 
 export const payoutSchema = z.object({

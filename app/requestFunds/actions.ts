@@ -1,17 +1,18 @@
 'use server';
 
 import { parseFormData, type ServerFormStateType } from '@/lib/formUtil';
-import { FundsRequestDataSchema, type FundsRequestDataSchemaType } from './schemas';
+import { FundsRequestDataSchema } from './schemas';
 
 export async function requestFundsAction(prevState: ServerFormStateType, data: FormData) {
   const { nextState, parsedData } = parseFormData(prevState, data, FundsRequestDataSchema);
+  console.log('Request funds action data:', parsedData);
   if (!nextState.success) {
+    console.log('Request funds action failed');
+    console.log('Errors:', nextState.errors);
     return nextState;
   }
-  const { paymentAmount, linkExpiry, trustPeriod } = parsedData as FundsRequestDataSchemaType;
-  console.log('paymentAmount', paymentAmount);
-  console.log('linkExpiry', linkExpiry);
-  console.log('trustPeriod', trustPeriod);
 
+  console.log('Request funds action succeeded');
+  console.log('Next state:', nextState);
   return nextState;
 }

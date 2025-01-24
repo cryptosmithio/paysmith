@@ -171,17 +171,3 @@ export const durationFormatter = (duration: number): string => {
 
   return `${hoursString} ${minuteString} ${secondString}`.trim();
 };
-
-export const jitsiInterfaceConfigOverwrite = {
-  MOBILE_APP_PROMO: false,
-
-  TOOLBAR_BUTTONS: [
-    'microphone',
-    'camera',
-    'fullscreen',
-    'fodeviceselection',
-    'tileview'
-  ],
-
-  APP_NAME: 'Champagne Room'
-};
