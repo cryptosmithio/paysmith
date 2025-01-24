@@ -35,4 +35,7 @@ export type FundsRequestDocumentType = z.infer<typeof fundsRequestSchema>;
 
 export const FundsRequest = models?.FundsRequest
   ? (models.FundsRequest as pkg.Model<FundsRequestDocumentType>)
-  : mongoose.model<FundsRequestDocumentType>('FundsRequest', fundsRequestMongooseSchema);
+  : mongoose.model<FundsRequestDocumentType>(
+      'FundsRequest',
+      fundsRequestMongooseSchema
+    );

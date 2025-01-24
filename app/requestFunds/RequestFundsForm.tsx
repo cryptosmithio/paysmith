@@ -32,17 +32,20 @@ const RequestFundsForm = () => {
   const { address } = useAccount();
 
   const formRef = useRef<HTMLFormElement>(null);
-  const [serverState, formAction] = useActionState(requestFundsAction, {
-    message: '',
-    fields: {},
-    errors: {},
-    success: false,
-  } as ServerFormStateType);
+  const [serverState, formAction, isPending] = useActionState(
+    requestFundsAction,
+    {
+      message: '',
+      fields: {},
+      errors: {},
+      success: false,
+    } as ServerFormStateType
+  );
   const {
     register,
     getValues,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     setValue,
     handleSubmit,
   } = useForm<RequestFundsFormSchemaType>({
@@ -75,7 +78,10 @@ const RequestFundsForm = () => {
   const onSubmit = () => {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      startTransition(() => formAction(formData));
+      startTransition(async () => {
+        formAction(formData);
+        console.log('Form submitted');
+      });
     }
   };
 
@@ -226,7 +232,7 @@ const RequestFundsForm = () => {
         />
       </Field>
       <input type="hidden" {...register('linkExpiry')} />
-      <Button type="submit" mt={2} disabled={isSubmitting}>
+      <Button type="submit" mt={2} disabled={isPending}>
         <LuShare />
         Generate Link
       </Button>

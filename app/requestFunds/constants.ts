@@ -11,6 +11,11 @@ export const LinkExpiryOptions = {
 export const TrustPeriodOptions = {
   items: TrustPeriodValues.map(value => ({
     value,
-    label: value === 'NONE' ? 'No Limit' : value === '1' ? '1 hour' : `${value} hours`,
+    label:
+      value === 'NONE'
+        ? 'No Limit'
+        : value === '1'
+        ? '1 hour'
+        : `${value} hours`,
   })),
 };
