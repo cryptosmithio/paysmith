@@ -1,17 +1,20 @@
 'use client';
 
-import { Box, Tabs } from '@chakra-ui/react';
+import { Box, Tabs, useTabs } from '@chakra-ui/react';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { useAccount } from 'wagmi';
-import RequestForm from '../requestFunds/RequestFundsForm';
-import SendForm from '../send/SendFundsForm';
+import RequestFundsForm from '../requestFunds/RequestFundsForm';
+import SendFundsForm from '../send/SendFundsForm';
 const Transactions = () => {
   return <Box>Transactions</Box>;
 };
 
 const MainTabs = () => {
+  const tabs = useTabs({
+    defaultValue: 'request',
+  });
   return (
-    <Tabs.Root defaultValue="request">
+    <Tabs.RootProvider value={tabs}>
       <Tabs.List>
         <Tabs.Trigger value="request">
           <LuShare />
@@ -19,7 +22,7 @@ const MainTabs = () => {
         </Tabs.Trigger>
         <Tabs.Trigger value="send">
           <LuSend />
-          Send
+          Send Funds
         </Tabs.Trigger>
 
         <Tabs.Trigger value="transactions">
@@ -28,15 +31,15 @@ const MainTabs = () => {
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="send">
-        <SendForm />
+        <SendFundsForm />
       </Tabs.Content>
       <Tabs.Content value="request">
-        <RequestForm />
+        <RequestFundsForm />
       </Tabs.Content>
       <Tabs.Content value="transactions">
         <Transactions />
       </Tabs.Content>
-    </Tabs.Root>
+    </Tabs.RootProvider>
   );
 };
 

@@ -1,10 +1,16 @@
 import type { z } from 'zod';
 
+export enum ServerFormStatus {
+  INITIAL = 'INITIAL',
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR',
+}
 export type ServerFormStateType = {
-  message: string;
+  message?: string;
   fields: Record<string, string>;
   errors: Record<string, string>;
-  success: boolean;
+  status: ServerFormStatus;
   returnData?: Record<string, unknown>;
 };
 
@@ -24,7 +30,9 @@ export function parseFormData<T extends z.ZodTypeAny>(
       message: result.success ? 'Success' : 'Invalid data',
       fields: formData,
       errors: errors,
-      success: result.success,
+      status: result.success
+        ? ServerFormStatus.SUCCESS
+        : ServerFormStatus.ERROR,
     } as ServerFormStateType,
     parsedData: result.data,
   };

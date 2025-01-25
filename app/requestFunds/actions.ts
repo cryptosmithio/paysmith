@@ -1,6 +1,10 @@
 'use server';
 
-import { parseFormData, type ServerFormStateType } from '@/lib/formUtil';
+import {
+  parseFormData,
+  ServerFormStatus,
+  type ServerFormStateType,
+} from '@/lib/formUtil';
 import { FundsRequestDataSchema } from './schemas';
 
 export async function requestFundsAction(
@@ -13,7 +17,7 @@ export async function requestFundsAction(
     FundsRequestDataSchema
   );
   console.log('Request funds action data:', parsedData);
-  if (!nextState.success) {
+  if (nextState.status !== ServerFormStatus.SUCCESS) {
     console.log('Request funds action failed');
     console.log('Errors:', nextState.errors);
     return nextState;

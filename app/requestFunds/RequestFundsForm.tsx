@@ -2,7 +2,7 @@
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
 import { CurrencyType } from '@/lib/constants';
-import type { ServerFormStateType } from '@/lib/formUtil';
+import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import {
   createListCollection,
   HStack,
@@ -17,7 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { startTransition, useActionState, useRef } from 'react';
+import { startTransition, useActionState, useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsName } from 'wagmi';
@@ -38,13 +38,14 @@ const RequestFundsForm = () => {
       message: '',
       fields: {},
       errors: {},
-      success: false,
+      status: ServerFormStatus.INITIAL,
     } as ServerFormStateType
   );
   const {
     register,
     getValues,
     control,
+    reset,
     formState: { errors },
     setValue,
     handleSubmit,
@@ -62,6 +63,13 @@ const RequestFundsForm = () => {
     },
     progressive: true,
   });
+
+  useEffect(() => {
+    if (serverState.status === ServerFormStatus.SUCCESS) {
+      reset();
+    }
+  }, [serverState, reset]);
+
   const exchangeRate = 3405; // get from Bitcart API
   const onUSDChange = () => {
     const usdAmount = getValues('usdAmount');
@@ -80,7 +88,6 @@ const RequestFundsForm = () => {
       const formData = new FormData(formRef.current);
       startTransition(async () => {
         formAction(formData);
-        console.log('Form submitted');
       });
     }
   };
