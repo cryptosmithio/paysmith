@@ -67,6 +67,10 @@ const RequestFundsForm = () => {
   useEffect(() => {
     if (serverState.status === ServerFormStatus.SUCCESS) {
       reset();
+      console.log(
+        'Funds request created:',
+        serverState.returnData?.fundsRequest
+      );
     }
   }, [serverState, reset]);
 

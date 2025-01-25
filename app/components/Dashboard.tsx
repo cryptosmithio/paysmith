@@ -3,7 +3,7 @@
 import { Box, Tabs, useTabs } from '@chakra-ui/react';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { useAccount } from 'wagmi';
-import RequestFundsForm from '../requestFunds/RequestFundsForm';
+import CreateRequestForm from '../requestFunds/CreateRequestForm';
 import SendFundsForm from '../send/SendFundsForm';
 const Transactions = () => {
   return <Box>Transactions</Box>;
@@ -34,7 +34,7 @@ const MainTabs = () => {
         <SendFundsForm />
       </Tabs.Content>
       <Tabs.Content value="request">
-        <RequestFundsForm />
+        <CreateRequestForm />
       </Tabs.Content>
       <Tabs.Content value="transactions">
         <Transactions />

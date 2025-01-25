@@ -5,6 +5,7 @@ import {
   ServerFormStatus,
   type ServerFormStateType,
 } from '@/lib/formUtil';
+import { FundsRequest } from './models';
 import { FundsRequestDataSchema } from './schemas';
 
 export async function requestFundsAction(
@@ -16,16 +17,22 @@ export async function requestFundsAction(
     data,
     FundsRequestDataSchema
   );
-  console.log('Request funds action data:', parsedData);
   if (nextState.status !== ServerFormStatus.SUCCESS) {
     console.log('Request funds action failed');
     console.log('Errors:', nextState.errors);
     return nextState;
   }
 
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  // Create FundsRequest document
+  const fundsRequest = new FundsRequest(parsedData);
 
-  console.log('Request funds action succeeded');
-  console.log('Next state:', nextState);
+  console.log('Funds request created:', fundsRequest);
+  nextState.returnData = {
+    fundsRequest: fundsRequest.toJSON({
+      flattenMaps: true,
+      flattenObjectIds: true,
+    }),
+  };
+
   return nextState;
 }
