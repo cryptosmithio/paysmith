@@ -1,4 +1,4 @@
-import type { FundsRequestDocumentType } from './models';
+import type { FundsRequestDocumentType } from '../../models';
 
 const ViewRequest = (fundsRequest: FundsRequestDocumentType) => {
   return (
