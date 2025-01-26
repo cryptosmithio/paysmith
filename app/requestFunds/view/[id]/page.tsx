@@ -1,3 +1,5 @@
+import dbConnect from '@/lib/dbConnect';
+import { FundsRequest, type FundsRequestDocumentType } from '../../models';
 import ViewRequest from './ViewRequest';
 
 export default async function Page({
@@ -8,6 +10,10 @@ export default async function Page({
   const { id } = await params;
 
   // Load request from database
+  await dbConnect();
+  const fundsRequest = (await FundsRequest.findById(
+    id
+  )) as FundsRequestDocumentType;
 
-  return <ViewRequest id={id} />;
+  return <ViewRequest fundsRequest={fundsRequest} />;
 }

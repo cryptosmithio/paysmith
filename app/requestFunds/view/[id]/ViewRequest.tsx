@@ -1,6 +1,10 @@
 import type { FundsRequestDocumentType } from '../../models';
 
-const ViewRequest = (fundsRequest: FundsRequestDocumentType) => {
+const ViewRequest = ({
+  fundsRequest,
+}: {
+  fundsRequest: FundsRequestDocumentType;
+}) => {
   return (
     <div>
       <div>Payment Address: {fundsRequest.paymentAddress}</div>
