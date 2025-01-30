@@ -5,6 +5,7 @@ import { CurrencyType } from '@/lib/constants';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import {
   Card,
+  CardBody,
   CardTitle,
   createListCollection,
   HStack,
@@ -118,11 +119,12 @@ const RequestFundsForm = () => {
       onSubmit={handleSubmit(onSubmit)} //allows client side validation
       ref={formRef}
     >
-      <Card.Root p={4}>
-        <CardTitle>Recipient Details</CardTitle>
+      <Card.Root p={4} maxW={'md'}>
+        <CardTitle>Recipient</CardTitle>
         <Card.Body>
-          <Card.Description>
-            Funds will be sent to the following wallet address.
+          <Card.Description textWrap={'wrap'}>
+            All funds collected by Paysmith will be sent into the following
+            wallet upon expiry of the trust period.
           </Card.Description>
           <HStack mt={4}>
             <Avatar src={ensAvatar as string} name={ensName as string} />
@@ -130,7 +132,7 @@ const RequestFundsForm = () => {
               <Text fontWeight="semibold" textStyle="sm">
                 {ensName}
               </Text>
-              <Text color="fg.muted" textStyle="sm">
+              <Text color="fg.muted" textStyle="xs">
                 {address}
               </Text>
             </Stack>
@@ -141,125 +143,141 @@ const RequestFundsForm = () => {
       <Input {...register('recipientAddress')} hidden />
       <Input {...register('recipientName')} hidden />
       <Input {...register('recipientAvatar')} hidden />
-      <Field
-        label="Amount"
-        invalid
-        mt={2}
-        errorText={
-          errors.amount?.message?.toString() ||
-          serverState.errors.amount?.toString()
-        }
-      >
-        <VStack>
-          <HStack w="100%">
-            <InputAddon>ETH</InputAddon>
-            <Input
-              placeholder="0"
-              {...register('amount')}
-              onBlur={onETHChange}
+      <Card.Root p={4} maxW={'md'}>
+        <CardTitle>Amount</CardTitle>
+        <CardBody>
+          <Field
+            invalid
+            mt={2}
+            errorText={
+              errors.amount?.message?.toString() ||
+              serverState.errors.amount?.toString()
+            }
+          >
+            <VStack>
+              <HStack w="100%">
+                <InputAddon>ETH</InputAddon>
+                <Input
+                  placeholder="0"
+                  {...register('amount')}
+                  onBlur={onETHChange}
+                />
+              </HStack>
+              <HStack w="100%">
+                <InputAddon>USD</InputAddon>
+                <Input
+                  placeholder="0"
+                  {...register('usdAmount')}
+                  onBlur={onUSDChange}
+                />
+              </HStack>
+            </VStack>
+          </Field>
+        </CardBody>
+      </Card.Root>
+      <Card.Root p={4} maxW={'md'}>
+        <CardTitle>Notes</CardTitle>
+        <CardBody>
+          <Field
+            mt={2}
+            errorText={
+              errors.notes?.message?.toString() ||
+              serverState.errors.notes?.toString()
+            }
+          >
+            <Textarea {...register('notes')} autoresize />
+          </Field>
+        </CardBody>
+      </Card.Root>
+      <Card.Root p={4} maxW={'md'}>
+        <CardTitle>Options</CardTitle>
+        <CardBody>
+          <Field
+            label="Trust Period"
+            errorText={
+              errors.trustPeriodSelect?.message?.toString() ||
+              serverState.errors.trustPeriod?.toString()
+            }
+            my={2}
+          >
+            <Controller
+              control={control}
+              name="trustPeriodSelect"
+              render={({ field }) => (
+                <SelectRoot
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={({ value }) => {
+                    setValue(
+                      'trustPeriod',
+                      value[0] as '1' | '8' | '24' | '48' | '72' | 'NONE'
+                    );
+                    field.onChange(value);
+                  }}
+                  onInteractOutside={() => field.onBlur()}
+                  collection={trustPeriodList}
+                >
+                  <SelectTrigger>
+                    <SelectValueText />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TrustPeriodOptions.items.map(option => (
+                      <SelectItem item={option} key={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </SelectRoot>
+              )}
             />
-          </HStack>
-          <HStack w="100%">
-            <InputAddon>USD</InputAddon>
-            <Input
-              placeholder="0"
-              {...register('usdAmount')}
-              onBlur={onUSDChange}
+          </Field>
+          <input type="hidden" {...register('trustPeriod')} />
+          <Field
+            label="Request Expiry"
+            errorText={
+              errors.linkExpirySelect?.message?.toString() ||
+              serverState.errors.linkExpiry?.toString()
+            }
+            my={2}
+          >
+            <Controller
+              control={control}
+              name="linkExpirySelect"
+              render={({ field }) => (
+                <SelectRoot
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={({ value }) => {
+                    setValue(
+                      'linkExpiry',
+                      value[0] as '30' | '60' | '90' | '180'
+                    );
+                    field.onChange(value);
+                  }}
+                  onInteractOutside={() => field.onBlur()}
+                  collection={linkExpiryList}
+                >
+                  <SelectTrigger>
+                    <SelectValueText />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LinkExpiryOptions.items.map(option => (
+                      <SelectItem item={option} key={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </SelectRoot>
+              )}
             />
-          </HStack>
-        </VStack>
-      </Field>
-      <Field
-        label="Notes"
-        mt={2}
-        errorText={
-          errors.notes?.message?.toString() ||
-          serverState.errors.notes?.toString()
-        }
-      >
-        <Textarea {...register('notes')} />
-      </Field>
-      <Field
-        label="Trust Period"
-        errorText={
-          errors.trustPeriodSelect?.message?.toString() ||
-          serverState.errors.trustPeriod?.toString()
-        }
-        my={2}
-      >
-        <Controller
-          control={control}
-          name="trustPeriodSelect"
-          render={({ field }) => (
-            <SelectRoot
-              name={field.name}
-              value={field.value}
-              onValueChange={({ value }) => {
-                setValue(
-                  'trustPeriod',
-                  value[0] as '1' | '8' | '24' | '48' | '72' | 'NONE'
-                );
-                field.onChange(value);
-              }}
-              onInteractOutside={() => field.onBlur()}
-              collection={trustPeriodList}
-            >
-              <SelectTrigger>
-                <SelectValueText />
-              </SelectTrigger>
-              <SelectContent>
-                {TrustPeriodOptions.items.map(option => (
-                  <SelectItem item={option} key={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </SelectRoot>
-          )}
-        />
-      </Field>
-      <input type="hidden" {...register('trustPeriod')} />
-      <Field
-        label="Link Expiry"
-        errorText={
-          errors.linkExpirySelect?.message?.toString() ||
-          serverState.errors.linkExpiry?.toString()
-        }
-        my={2}
-      >
-        <Controller
-          control={control}
-          name="linkExpirySelect"
-          render={({ field }) => (
-            <SelectRoot
-              name={field.name}
-              value={field.value}
-              onValueChange={({ value }) => {
-                setValue('linkExpiry', value[0] as '30' | '60' | '90' | '180');
-                field.onChange(value);
-              }}
-              onInteractOutside={() => field.onBlur()}
-              collection={linkExpiryList}
-            >
-              <SelectTrigger>
-                <SelectValueText />
-              </SelectTrigger>
-              <SelectContent>
-                {LinkExpiryOptions.items.map(option => (
-                  <SelectItem item={option} key={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </SelectRoot>
-          )}
-        />
-      </Field>
+          </Field>
+          <Button type="submit" mt={2} disabled={isPending}>
+            <LuShare />
+            Generate Link
+          </Button>
+        </CardBody>
+      </Card.Root>
       <input type="hidden" {...register('linkExpiry')} />
-      <Button type="submit" mt={2} disabled={isPending}>
-        <LuShare />
-        Generate Link
-      </Button>
     </form>
   );
 };
