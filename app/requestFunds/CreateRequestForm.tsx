@@ -4,6 +4,8 @@ import { Field } from '@/app/components/ui/field';
 import { CurrencyType } from '@/lib/constants';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import {
+  Card,
+  CardTitle,
   createListCollection,
   HStack,
   Input,
@@ -13,6 +15,8 @@ import {
   SelectRoot,
   SelectTrigger,
   SelectValueText,
+  Stack,
+  Text,
   Textarea,
   VStack,
 } from '@chakra-ui/react';
@@ -20,7 +24,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { startTransition, useActionState, useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
-import { useAccount, useEnsName } from 'wagmi';
+import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
+import { Avatar } from '../components/ui/avatar';
 import { requestFundsAction } from './actions';
 import { LinkExpiryOptions, TrustPeriodOptions } from './constants';
 import {
@@ -58,7 +63,7 @@ const RequestFundsForm = () => {
       linkExpiry: '60',
       usdAmount: 0,
       amount: 0,
-      paymentAddress: address,
+      recipientAddress: address,
       currency: CurrencyType.ETH,
     },
     progressive: true,
@@ -101,7 +106,11 @@ const RequestFundsForm = () => {
 
   const { data: ensName } = useEnsName({ address });
   if (ensName) {
-    setValue('paymentName', ensName);
+    setValue('recipientName', ensName);
+  }
+  const { data: ensAvatar } = useEnsAvatar({ name: ensName as string });
+  if (ensAvatar) {
+    setValue('recipientAvatar', ensAvatar);
   }
 
   return (
@@ -109,25 +118,29 @@ const RequestFundsForm = () => {
       onSubmit={handleSubmit(onSubmit)} //allows client side validation
       ref={formRef}
     >
-      <Field
-        label="Recipient Address"
-        errorText={
-          errors.paymentAddress?.message?.toString() ||
-          serverState.errors.paymentAddress?.toString()
-        }
-      >
-        <Input {...register('paymentAddress')} readOnly />
-      </Field>
-      <Field
-        label="Recipient Name"
-        mt={2}
-        errorText={
-          errors.paymentName?.message?.toString() ||
-          serverState.errors.paymentName?.toString()
-        }
-      >
-        <Input {...register('paymentName')} />
-      </Field>
+      <Card.Root p={4}>
+        <CardTitle>Recipient Details</CardTitle>
+        <Card.Body>
+          <Card.Description>
+            Funds will be sent to the following wallet address.
+          </Card.Description>
+          <HStack mt={4}>
+            <Avatar src={ensAvatar as string} name={ensName as string} />
+            <Stack gap="0">
+              <Text fontWeight="semibold" textStyle="sm">
+                {ensName}
+              </Text>
+              <Text color="fg.muted" textStyle="sm">
+                {address}
+              </Text>
+            </Stack>
+          </HStack>
+        </Card.Body>
+      </Card.Root>
+
+      <Input {...register('recipientAddress')} hidden />
+      <Input {...register('recipientName')} hidden />
+      <Input {...register('recipientAvatar')} hidden />
       <Field
         label="Amount"
         invalid

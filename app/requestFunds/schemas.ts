@@ -4,7 +4,7 @@ import * as zod from 'zod';
 import { LinkExpiryValues, TrustPeriodValues } from './constants';
 
 export const FundsRequestDataSchema = zod.object({
-  paymentAddress: zod
+  recipientAddress: zod
     .string()
     .min(1, 'Address is required')
     .refine(value => {
@@ -16,10 +16,11 @@ export const FundsRequestDataSchema = zod.object({
     .string()
     .max(255, 'Notes must be less than 255 characters')
     .optional(),
-  paymentName: zod
+  recipientName: zod
     .string()
     .max(50, 'Name must be less than 50 characters')
     .optional(),
+  recipientAvatar: zod.string().optional(),
   amount: zod.coerce
     .number()
     .positive('Amount should be greater than 0')
