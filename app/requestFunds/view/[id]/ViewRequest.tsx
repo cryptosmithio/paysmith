@@ -1,5 +1,6 @@
-import { Button, Card, HStack, Separator, Stack, Text } from '@chakra-ui/react';
-import type { FundsRequestDocumentType } from '../../models';
+import { Avatar } from '@/app/components/ui/avatar';
+import type { FundsRequestDocumentType } from '@/app/requestFunds/models';
+import { Button, Card, HStack, Stack, Text } from '@chakra-ui/react';
 
 const ViewRequest = ({
   fundsRequest,
@@ -7,32 +8,41 @@ const ViewRequest = ({
   fundsRequest: FundsRequestDocumentType;
 }) => {
   return (
-    <Card.Root variant="elevated" boxShadow="lg">
+    <Card.Root variant="elevated" boxShadow="lg" maxW={'md'}>
       <Card.Header gap="1">
-        <Card.Title>Paysmith</Card.Title>
-        <Card.Description>Funds Request</Card.Description>
+        <Card.Title>Paysmith Request</Card.Title>
+        <Card.Description>
+          You are requested to pay {fundsRequest.recipientName} via Paysmith, a
+          safe and secure way to payment platform on the blockchain.
+        </Card.Description>
       </Card.Header>
       <Card.Body>
-        <Stack gap="4" width="full">
-          <Stack direction="row" gap="3">
-            <Button variant="outline" colorPalette="gray" flex="1">
-              Google
-            </Button>
-            <Button variant="outline" colorPalette="gray" flex="1">
-              GitHub
-            </Button>
-          </Stack>
-          <HStack gap="2">
-            <Separator />
-            <Text color="fg.subtle" textStyle="sm" whiteSpace="nowrap">
-              or sign up with
+        <HStack mt={4}>
+          <Avatar
+            src={fundsRequest.recipientAvatar as string}
+            name={fundsRequest.recipientName as string}
+          />
+          <Stack gap="0">
+            <Text fontWeight="semibold" textStyle="sm">
+              {fundsRequest.recipientName}
             </Text>
-            <Separator />
-          </HStack>
+            <Text color="fg.muted" textStyle="xs">
+              {fundsRequest.recipientAddress}
+            </Text>
+          </Stack>
+        </HStack>
+
+        <Stack mt={4}>
+          <Text fontWeight="semibold" textStyle="sm">
+            Notes:
+          </Text>
+          <Text color="fg.muted" textStyle="sm">
+            {fundsRequest.notes}
+          </Text>
         </Stack>
       </Card.Body>
       <Card.Footer>
-        <Button width="full">Create Account</Button>
+        <Button width="full">Pay</Button>
       </Card.Footer>
 
       <div>

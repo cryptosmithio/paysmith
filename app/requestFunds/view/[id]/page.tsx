@@ -1,5 +1,8 @@
+import {
+  FundsRequest,
+  type FundsRequestDocumentType,
+} from '@/app/requestFunds/models';
 import dbConnect from '@/lib/dbConnect';
-import { FundsRequest, type FundsRequestDocumentType } from '../../models';
 import ViewRequest from './ViewRequest';
 
 export default async function Page({

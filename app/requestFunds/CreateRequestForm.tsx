@@ -1,4 +1,5 @@
 'use client';
+import { Avatar } from '@/app/components/ui/avatar';
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
 import { CurrencyType } from '@/lib/constants';
@@ -26,7 +27,6 @@ import { startTransition, useActionState, useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
-import { Avatar } from '../components/ui/avatar';
 import { requestFundsAction } from './actions';
 import { LinkExpiryOptions, TrustPeriodOptions } from './constants';
 import {
@@ -174,8 +174,7 @@ const RequestFundsForm = () => {
             </VStack>
           </Field>
         </CardBody>
-      </Card.Root>
-      <Card.Root p={4} maxW={'md'}>
+
         <CardTitle>Notes</CardTitle>
         <CardBody>
           <Field
