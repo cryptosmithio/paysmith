@@ -1,7 +1,11 @@
 import { CurrencyType } from '@/lib/constants';
 import { isAddress } from 'viem';
 import * as zod from 'zod';
-import { LinkExpiryValues, TrustPeriodValues } from './constants';
+import {
+  FundsRequestStatus,
+  LinkExpiryValues,
+  TrustPeriodValues,
+} from './constants';
 
 export const FundsRequestDataSchema = zod.object({
   recipientAddress: zod
@@ -27,6 +31,9 @@ export const FundsRequestDataSchema = zod.object({
     .default(0),
   currency: zod.nativeEnum(CurrencyType).default(CurrencyType.ETH),
   bcInvoiceId: zod.string().trim().optional(),
+  status: zod
+    .nativeEnum(FundsRequestStatus)
+    .default(FundsRequestStatus.AWAITING_FUNDS),
 }); // Server side validation and object creation
 
 export const RequestFundsFormSchema = zod

@@ -1,5 +1,6 @@
 import mongoose, * as pkg from 'mongoose';
 import {
+  genTimestampsSchema,
   mongooseZodCustomType,
   toMongooseSchema,
   toZodMongooseSchema,
@@ -17,7 +18,8 @@ const fundsRequestSchema = toZodMongooseSchema(
         auto: true,
       }),
     })
-    .merge(FundsRequestDataSchema),
+    .merge(FundsRequestDataSchema)
+    .merge(genTimestampsSchema()),
   {
     schemaOptions: {
       collection: 'fundsRequests',

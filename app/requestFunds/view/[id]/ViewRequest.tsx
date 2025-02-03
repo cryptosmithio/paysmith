@@ -1,14 +1,20 @@
 import { Avatar } from '@/app/components/ui/avatar';
 import type { FundsRequestDocumentType } from '@/app/requestFunds/models';
 import { Button, Card, HStack, Stack, Text } from '@chakra-ui/react';
+import spacetime from 'spacetime';
 
 const ViewRequest = ({
   fundsRequest,
 }: {
   fundsRequest: FundsRequestDocumentType;
 }) => {
+  const expiryTime = spacetime(fundsRequest.createdAt).add(
+    Number(fundsRequest.linkExpiry),
+    'minutes'
+  );
+  const expired = expiryTime.isBefore(spacetime.now());
   return (
-    <Card.Root variant="elevated" boxShadow="lg" maxW={'md'}>
+    <Card.Root variant="elevated" boxShadow="lg" maxW={'md'} textStyle="sm">
       <Card.Header gap="1">
         <Card.Title>Paysmith Request</Card.Title>
         <Card.Description>
@@ -23,38 +29,39 @@ const ViewRequest = ({
             name={fundsRequest.recipientName as string}
           />
           <Stack gap="0">
-            <Text fontWeight="semibold" textStyle="sm">
-              {fundsRequest.recipientName}
-            </Text>
+            <Text fontWeight="semibold">{fundsRequest.recipientName}</Text>
             <Text color="fg.muted" textStyle="xs">
               {fundsRequest.recipientAddress}
             </Text>
           </Stack>
         </HStack>
+        <HStack mt={4}>
+          <Text fontWeight="semibold">Amount:</Text>
+          <Text color="fg.muted">
+            {fundsRequest.amount} {fundsRequest.currency}
+          </Text>
+        </HStack>
+
+        <HStack mt={4}>
+          <Text fontWeight="semibold">
+            These funds will be held for {fundsRequest.trustPeriod} hours in
+            trust after deposit
+          </Text>
+        </HStack>
 
         <Stack mt={4}>
-          <Text fontWeight="semibold" textStyle="sm">
-            Notes:
+          <Text fontWeight="semibold">Notes:</Text>
+          <Text color="fg.muted">{fundsRequest.notes}</Text>
+          <Text color={expired ? 'red' : 'green'}>
+            Expires: {expiryTime.toNativeDate().toLocaleString()}
           </Text>
-          <Text color="fg.muted" textStyle="sm">
-            {fundsRequest.notes}
-          </Text>
+          <Text fontWeight="semibold">Status:</Text>
+          <Text color="fg.muted">{fundsRequest.status}</Text>
         </Stack>
       </Card.Body>
       <Card.Footer>
         <Button width="full">Pay</Button>
       </Card.Footer>
-
-      <div>
-        <div>Payment Address: {fundsRequest.recipientAddress}</div>
-        <div>Link Expiry: {fundsRequest.linkExpiry}</div>
-        <div>Trust Period: {fundsRequest.trustPeriod}</div>
-        <div>Notes: {fundsRequest.notes}</div>
-        <div>Payment Name: {fundsRequest.recipientName}</div>
-        <div>Amount: {fundsRequest.amount}</div>
-        <div>Currency: {fundsRequest.currency}</div>
-        <div>BC Invoice Id: {fundsRequest.bcInvoiceId}</div>
-      </div>
     </Card.Root>
   );
 };

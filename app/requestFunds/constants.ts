@@ -15,7 +15,15 @@ export const TrustPeriodOptions = {
       value === 'NONE'
         ? 'No Limit'
         : value === '1'
-        ? '1 hour'
-        : `${value} hours`,
+          ? '1 hour'
+          : `${value} hours`,
   })),
 };
+
+export enum FundsRequestStatus {
+  AWAITING_FUNDS = 'AWAITING FUNDS',
+  FUNDS_DEPOSITED = 'FUNDS DEPOSITED',
+  IN_TRUST = 'IN TRUST',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
