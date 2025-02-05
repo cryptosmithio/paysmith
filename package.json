@@ -19,6 +19,7 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "avatar": "^0.1.0",
+    "bullmq": "^5.40.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "mongoose": "^8.9.5",

@@ -45,7 +45,7 @@ const ViewRequest = ({
         <HStack mt={4}>
           <Text fontWeight="semibold">
             These funds will be held for {fundsRequest.trustPeriod} hours in
-            trust after deposit
+            trust after full deposit verification.
           </Text>
         </HStack>
 
