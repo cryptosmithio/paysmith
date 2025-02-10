@@ -3,6 +3,7 @@ import { Avatar } from '@/app/components/ui/avatar';
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
 import { CurrencyType } from '@/lib/constants';
+import { getEthRate } from '@/lib/cryptoUtil';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import {
   Card,
@@ -23,7 +24,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { startTransition, useActionState, useEffect, useRef } from 'react';
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
@@ -36,7 +43,6 @@ import {
 
 const RequestFundsForm = () => {
   const { address } = useAccount();
-
   const formRef = useRef<HTMLFormElement>(null);
   const [serverState, formAction, isPending] = useActionState(
     requestFundsAction,
@@ -70,6 +76,8 @@ const RequestFundsForm = () => {
     progressive: true,
   });
 
+  const [exchangeRate, setExchangeRate] = useState(1);
+
   useEffect(() => {
     if (serverState.status === ServerFormStatus.SUCCESS) {
       reset();
@@ -80,7 +88,15 @@ const RequestFundsForm = () => {
     }
   }, [serverState, reset]);
 
-  const exchangeRate = 3405; // get from Bitcart API
+  useEffect(() => {
+    async function fetchExchangeRate() {
+      const rate = await getEthRate();
+      setExchangeRate(rate);
+    }
+
+    fetchExchangeRate();
+  }, []);
+
   const onUSDChange = () => {
     const usdAmount = getValues('usdAmount');
     const ethValue = usdAmount / exchangeRate;

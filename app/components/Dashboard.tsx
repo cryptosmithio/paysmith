@@ -13,6 +13,7 @@ const MainTabs = () => {
   const tabs = useTabs({
     defaultValue: 'request',
   });
+
   return (
     <Tabs.RootProvider value={tabs}>
       <Tabs.List>
