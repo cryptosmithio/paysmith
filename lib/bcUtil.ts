@@ -4,11 +4,15 @@ import type { FundsRequestDocumentType } from '@/app/requestFunds/models';
 import {
   createInvoiceInvoicesPost,
   createTokenTokenPost,
+  modifyInvoiceInvoicesModelIdPatch,
   rateCryptosRateGet,
 } from '@/lib/bitcartApi';
 import axios from 'axios';
+import urlJoin from 'url-join';
 import type { DisplayInvoice } from './bitcartApi/models';
 import { CurrencyType } from './constants';
+import { authEncrypt } from './crypt';
+
 const permissions = ['full_control'];
 
 const bcConfig = {
@@ -16,6 +20,8 @@ const bcConfig = {
   email: process.env.BITCART_EMAIL,
   password: process.env.BITCART_PASSWORD,
   apiUrl: process.env.BITCART_API_URL,
+  invoiceNotifyUrl: process.env.BITCART_INVOICE_NOTIFY_URL,
+  authSalt: process.env.AUTH_SALT,
 };
 
 const createBitcartToken = async () => {
@@ -83,5 +89,19 @@ export const createInvoice = async (fr: FundsRequestDocumentType) => {
     throw new Error('Invoice cannot be created');
   }
   const invoice = response.data as DisplayInvoice;
+
+  // Update the notification URL
+  const encryptedInvoiceId =
+    authEncrypt(
+      invoice.id ? (invoice.id as string) : '',
+      bcConfig.authSalt ?? ''
+    ) ?? '';
+
+  invoice.notification_url = urlJoin(
+    bcConfig.invoiceNotifyUrl!,
+    encryptedInvoiceId
+  );
+
+  modifyInvoiceInvoicesModelIdPatch(invoice.id!, invoice, headers);
   return invoice;
 };

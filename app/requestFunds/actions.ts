@@ -21,8 +21,8 @@ export async function requestFundsAction(
     FundsRequestDataSchema
   );
   if (nextState.status !== ServerFormStatus.SUCCESS) {
-    console.log('Request funds action failed');
-    console.log('Errors:', nextState.errors);
+    console.error('Request funds action failed');
+    console.error('Errors:', nextState.errors);
     return nextState;
   }
 
