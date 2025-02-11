@@ -1,4 +1,4 @@
-export const LinkExpiryValues = ['30', '60', '90', '180'] as const;
+export const LinkExpiryValues = ['1', '30', '60', '90', '180'] as const;
 export const TrustPeriodValues = ['1', '8', '24', '48', '72', 'NONE'] as const;
 
 export const LinkExpiryOptions = {

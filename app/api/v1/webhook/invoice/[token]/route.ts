@@ -6,9 +6,9 @@ export async function POST(
   try {
     // Process the webhook payload
     const { token } = await params;
-    const formData = await request.formData();
-    const bcInvoiceId = formData.get('id') as string;
-    const status = formData.get('status') as string;
+    const jsonData = await request.json();
+    const bcInvoiceId = jsonData.id as string;
+    const status = jsonData.status as string;
 
     console.log('Webhook received:', {
       token,
@@ -16,6 +16,7 @@ export async function POST(
       status,
     });
   } catch (error: any) {
+    console.error(error);
     return new Response(`Webhook error: ${error.message}`, {
       status: 400,
     });
