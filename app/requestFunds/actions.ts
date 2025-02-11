@@ -1,5 +1,6 @@
 'use server';
 
+import { createInvoice } from '@/lib/bcUtil';
 import dbConnect from '@/lib/dbConnect';
 import {
   parseFormData,
@@ -30,6 +31,11 @@ export async function requestFundsAction(
 
   // Create FundsRequest document
   const fundsRequest = await FundsRequest.create(parsedData);
+
+  // Create associated invoice
+  const invoice = await createInvoice(fundsRequest);
+  fundsRequest.bcInvoiceId = invoice.id;
+  await fundsRequest.save();
 
   console.log('Funds request created:', fundsRequest);
   // nextState.returnData = {

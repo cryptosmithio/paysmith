@@ -2,8 +2,8 @@
 import { Avatar } from '@/app/components/ui/avatar';
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
+import { getEthRate } from '@/lib/bcUtil';
 import { CurrencyType } from '@/lib/constants';
-import { getEthRate } from '@/lib/cryptoUtil';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import {
   Card,

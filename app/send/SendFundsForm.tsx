@@ -3,16 +3,21 @@
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
 import { SendFormSchema, type SendFormSchemaType } from '@/app/send/common';
-import type { ServerFormStateType } from '@/lib/formUtil';
+import { getEthRate } from '@/lib/bcUtil';
+import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import { HStack, Input, InputAddon, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { startTransition, useActionState, useRef } from 'react';
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { formatEther } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
 import { sendFundsAction } from './actions';
-
-const exchangeRate = 3405; // get from Bitcart API
 
 const SendFundsForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -20,7 +25,7 @@ const SendFundsForm = () => {
     message: '',
     fields: {},
     errors: {},
-    success: false,
+    status: ServerFormStatus.INITIAL,
   } as ServerFormStateType);
   const { address } = useAccount();
   const balance = useBalance({ address });
@@ -44,6 +49,17 @@ const SendFundsForm = () => {
   } = useForm<SendFormSchemaType>({
     resolver: zodResolver(schemaEthAmount),
   });
+
+  const [exchangeRate, setExchangeRate] = useState(1);
+
+  useEffect(() => {
+    async function fetchExchangeRate() {
+      const rate = await getEthRate();
+      setExchangeRate(rate);
+    }
+
+    fetchExchangeRate();
+  }, []);
 
   const onUSDChange = () => {
     const usdAmount = getValues('usdAmount');
