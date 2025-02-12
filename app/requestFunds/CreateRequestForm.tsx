@@ -2,9 +2,9 @@
 import { Avatar } from '@/app/components/ui/avatar';
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
-import { getEthRate } from '@/lib/bcUtil';
 import { CurrencyType } from '@/lib/constants';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
+import { getEthRate } from '@/lib/server/bcUtil';
 import {
   Card,
   CardBody,
@@ -64,7 +64,7 @@ const RequestFundsForm = () => {
   } = useForm<RequestFundsFormSchemaType>({
     resolver: zodResolver(RequestFundsFormSchema),
     defaultValues: {
-      linkExpirySelect: ['60'],
+      linkExpirySelect: ['1'],
       trustPeriodSelect: ['24'],
       trustPeriod: '24',
       linkExpiry: '60',
@@ -265,7 +265,7 @@ const RequestFundsForm = () => {
                   onValueChange={({ value }) => {
                     setValue(
                       'linkExpiry',
-                      value[0] as '30' | '60' | '90' | '180'
+                      value[0] as '1' | '30' | '60' | '90' | '180'
                     );
                     field.onChange(value);
                   }}

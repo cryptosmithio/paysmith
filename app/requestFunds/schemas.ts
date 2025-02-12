@@ -33,7 +33,7 @@ export const FundsRequestDataSchema = zod.object({
   bcInvoiceId: zod.string().trim().optional(),
   status: zod
     .nativeEnum(FundsRequestStatus)
-    .default(FundsRequestStatus.AWAITING_FUNDS),
+    .default(FundsRequestStatus.CREATED),
 }); // Server side validation and object creation
 
 export const RequestFundsFormSchema = zod

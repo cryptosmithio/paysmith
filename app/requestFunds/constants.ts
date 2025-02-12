@@ -4,7 +4,7 @@ export const TrustPeriodValues = ['1', '8', '24', '48', '72', 'NONE'] as const;
 export const LinkExpiryOptions = {
   items: LinkExpiryValues.map(value => ({
     value,
-    label: `${value} minutes`,
+    label: value === '1' ? '1 minute' : `${value} minutes`,
   })),
 };
 
@@ -21,6 +21,7 @@ export const TrustPeriodOptions = {
 };
 
 export enum FundsRequestStatus {
+  CREATED = 'CREATED',
   AWAITING_FUNDS = 'AWAITING FUNDS',
   FUNDS_DEPOSITED = 'FUNDS DEPOSITED',
   IN_TRUST = 'IN TRUST',

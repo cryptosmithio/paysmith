@@ -28,7 +28,15 @@ const fundsRequestSchema = toZodMongooseSchema(
   }
 );
 
-const fundsRequestMongooseSchema = toMongooseSchema(fundsRequestSchema);
+const fundsRequestMongooseSchema = toMongooseSchema(fundsRequestSchema).index(
+  {
+    bcInvoiceId: 1,
+  },
+  {
+    unique: true,
+    partialFilterExpression: { bcInvoiceId: { $exists: true } }, // Only index documents that have the bcInvoiceId field
+  }
+);
 
 export type FundsRequestDocument = InstanceType<typeof FundsRequest>;
 

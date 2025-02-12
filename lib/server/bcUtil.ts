@@ -9,9 +9,9 @@ import {
 } from '@/lib/bitcartApi';
 import axios from 'axios';
 import urlJoin from 'url-join';
-import type { DisplayInvoice } from './bitcartApi/models';
-import { CurrencyType } from './constants';
-import { authEncrypt } from './crypt';
+import type { DisplayInvoice } from '../bitcartApi/models';
+import { CurrencyType } from '../constants';
+import { authEncrypt } from '../crypt';
 
 const permissions = ['full_control'];
 

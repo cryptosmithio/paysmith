@@ -1,10 +1,20 @@
+export enum BCInvoiceStatus {
+  PENDING = 'pending',
+  COMPLETE = 'complete',
+  INVALID = 'invalid',
+  EXPIRED = 'expired',
+  IN_PROGRESS = 'in progress',
+  FAILED = 'failed',
+  REFUNDED = 'refunded',
+}
+
 export enum ActorType {
   AGENT = 'AGENT',
   CREATOR = 'CREATOR',
   CUSTOMER = 'CUSTOMER',
   TIMER = 'TIMER',
   UNKNOWN = 'UNKNOWN',
-  ARBITRATOR = 'ARBITRATOR'
+  ARBITRATOR = 'ARBITRATOR',
 }
 
 export enum AuthType {
@@ -14,7 +24,7 @@ export enum AuthType {
   NONE = 'NONE',
   PATH = 'PATH',
   TOKEN = 'TOKEN',
-  IMPERSONATION = 'IMPERSONATION'
+  IMPERSONATION = 'IMPERSONATION',
 }
 
 export enum PayoutStatus {
@@ -23,7 +33,7 @@ export enum PayoutStatus {
   CANCELLED = 'cancelled',
   FAILED = 'failed',
   SENT = 'sent',
-  COMPLETE = 'complete'
+  COMPLETE = 'complete',
 }
 
 export enum CancelReason {
@@ -34,19 +44,19 @@ export enum CancelReason {
   CREATOR_CANCELLED = 'CREATOR CANCELLED',
   TICKET_PAYMENT_TIMEOUT = 'TICKET PAYMENT TIMEOUT',
   TICKET_PAYMENT_FAILED = 'TICKET PAYMENT FAILED',
-  TICKET_PAYMENT_INVALID = 'TICKET PAYMENT INVALID'
+  TICKET_PAYMENT_INVALID = 'TICKET PAYMENT INVALID',
 }
 
 export enum CurrencyType {
   USD = 'USD',
   ETH = 'ETH',
-  NONE = 'NONE'
+  NONE = 'NONE',
 }
 
 export enum DisputeDecision {
   NO_REFUND = 'NO REFUND',
   FULL_REFUND = 'FULL REFUND',
-  PARTIAL_REFUND = 'PARTIAL REFUND'
+  PARTIAL_REFUND = 'PARTIAL REFUND',
 }
 
 export enum DisputeReason {
@@ -54,13 +64,13 @@ export enum DisputeReason {
   ENDED_EARLY = 'ENDED EARLY',
   LOW_QUALITY = 'LOW QUALITY',
   CREATOR_NO_SHOW = 'CREATOR NO SHOW',
-  SHOW_NEVER_STARTED = 'SHOW NEVER STARTED'
+  SHOW_NEVER_STARTED = 'SHOW NEVER STARTED',
 }
 
 export enum EarningsSource {
   SHOW_PERFORMANCE = 'SHOW PERFORMANCE',
   COMMISSION = 'COMMISSION',
-  REFERRAL = 'REFERRAL'
+  REFERRAL = 'REFERRAL',
 }
 
 export enum EntityType {
@@ -76,14 +86,14 @@ export enum EntityType {
   NONE = 'None',
   ROOM = 'Room',
   WALLET = 'Wallet',
-  SHOWEVENT = 'ShowEvent'
+  SHOWEVENT = 'ShowEvent',
 }
 
 export enum RefundReason {
   SHOW_CANCELLED = 'SHOW CANCELLED',
   CUSTOMER_CANCELLED = 'CUSTOMER CANCELLED',
   DISPUTE_DECISION = 'DISPUTE DECISION',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }
 
 export enum ShowStatus {
@@ -96,7 +106,7 @@ export enum ShowStatus {
   REFUND_INITIATED = 'REFUND INITIATED',
   LIVE = 'LIVE',
   STOPPED = 'STOPPED',
-  ENDED = 'ENDED'
+  ENDED = 'ENDED',
 }
 
 export enum TicketStatus {
@@ -116,14 +126,14 @@ export enum TicketStatus {
   REFUNDED = 'REFUNDED',
   MISSED_SHOW = 'MISSED SHOW',
   SHOW_CANCELLED = 'SHOW CANCELLED',
-  WAITING_FOR_DISPUTE_REFUND = 'WAITING FOR DISPUTE REFUND'
+  WAITING_FOR_DISPUTE_REFUND = 'WAITING FOR DISPUTE REFUND',
 }
 
 export enum TransactionReason {
   TICKET_PAYMENT = 'TICKET PAYMENT',
   TICKET_REFUND = 'TICKET REFUND',
   DISPUTE_RESOLUTION = 'DISPUTE RESOLUTION',
-  CREATOR_PAYOUT = 'CREATOR PAYOUT'
+  CREATOR_PAYOUT = 'CREATOR PAYOUT',
 }
 
 export enum UserRole {
@@ -132,7 +142,7 @@ export enum UserRole {
   AGENT = 'AGENT',
   CREATOR = 'CREATOR',
   EXTERNAL = 'EXTERNAL',
-  TICKET_HOLDER = 'TICKET HOLDER'
+  TICKET_HOLDER = 'TICKET HOLDER',
 }
 
 export enum WalletMachineEventString {
@@ -142,7 +152,7 @@ export enum WalletMachineEventString {
   PAYOUT_SENT = 'PAYOUT SENT',
   PAYOUT_FAILED = 'PAYOUT FAILED',
   PAYOUT_CANCELLED = 'PAYOUT CANCELLED',
-  PAYOUT_COMPLETE = 'PAYOUT COMPLETE'
+  PAYOUT_COMPLETE = 'PAYOUT COMPLETE',
 }
 
 export const currencyFormatter = (
@@ -155,7 +165,7 @@ export const currencyFormatter = (
     style: 'currency',
     currency,
     currencyDisplay: 'symbol',
-    minimumFractionDigits
+    minimumFractionDigits,
   });
 
   return formatter;

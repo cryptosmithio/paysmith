@@ -1,14 +1,15 @@
 'use server';
 
-import { createInvoice } from '@/lib/bcUtil';
 import dbConnect from '@/lib/dbConnect';
 import {
   parseFormData,
   ServerFormStatus,
   type ServerFormStateType,
 } from '@/lib/formUtil';
+import { createInvoice } from '@/lib/server/bcUtil';
 import { redirect } from 'next/navigation';
-import { FundsRequest } from './models';
+import { FundsRequestStatus } from './constants';
+import { FundsRequest, type FundsRequestDocument } from './models';
 import { FundsRequestDataSchema } from './schemas';
 
 export async function requestFundsAction(
@@ -30,11 +31,14 @@ export async function requestFundsAction(
   await dbConnect();
 
   // Create FundsRequest document
-  const fundsRequest = await FundsRequest.create(parsedData);
+  const fundsRequest = (await FundsRequest.create(
+    parsedData
+  )) as FundsRequestDocument;
 
   // Create associated invoice
   const invoice = await createInvoice(fundsRequest);
   fundsRequest.bcInvoiceId = invoice.id;
+  fundsRequest.status = FundsRequestStatus.AWAITING_FUNDS;
   await fundsRequest.save();
 
   console.log('Funds request created:', fundsRequest);
