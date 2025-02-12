@@ -9,8 +9,8 @@ import {
 import { createInvoice } from '@/lib/server/bcUtil';
 import { redirect } from 'next/navigation';
 import { FundsRequestStatus } from './constants';
-import { FundsRequest, type FundsRequestDocumentType } from './models';
-import { FundsRequestDataSchema } from './schemas';
+import { FundsRequest } from './models';
+import { FundsRequestSchema } from './schemas';
 
 export async function requestFundsAction(
   prevState: ServerFormStateType,
@@ -19,7 +19,7 @@ export async function requestFundsAction(
   const { nextState, parsedData } = parseFormData(
     prevState,
     data,
-    FundsRequestDataSchema
+    FundsRequestSchema
   );
   if (nextState.status !== ServerFormStatus.SUCCESS) {
     console.error('Request funds action failed');
@@ -31,9 +31,7 @@ export async function requestFundsAction(
   await dbConnect();
 
   // Create FundsRequest document
-  const fundsRequest = (await FundsRequest.create(
-    parsedData
-  )) as FundsRequestDocumentType;
+  const fundsRequest = await FundsRequest.create(parsedData);
 
   // Create associated invoice
   const invoice = await createInvoice(fundsRequest);

@@ -7,7 +7,7 @@ import {
   TrustPeriodValues,
 } from './constants';
 
-export const FundsRequestDataSchema = zod.object({
+export const FundsRequestSchema = zod.object({
   recipientAddress: zod
     .string()
     .min(1, 'Address is required')
@@ -46,12 +46,4 @@ export const RequestFundsFormSchema = zod
       .array(),
     usdAmount: zod.coerce.number().min(0, 'Amount must be greater than 0'),
   })
-  .merge(FundsRequestDataSchema); // Client side validation
-
-export type RequestFundsFormSchemaType = zod.infer<
-  typeof RequestFundsFormSchema
->;
-
-export type FundsRequestDataSchemaType = zod.infer<
-  typeof FundsRequestDataSchema
->;
+  .merge(FundsRequestSchema); // Client side validation

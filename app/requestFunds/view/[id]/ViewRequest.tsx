@@ -1,13 +1,9 @@
+'use client';
 import { Avatar } from '@/app/components/ui/avatar';
-import type { FundsRequestDataType } from '@/app/requestFunds/models';
+import { FundsRequestType } from '@/app/requestFunds/models';
 import { Button, Card, HStack, Stack, Text } from '@chakra-ui/react';
 import spacetime from 'spacetime';
-
-const ViewRequest = ({
-  fundsRequest,
-}: {
-  fundsRequest: FundsRequestDataType;
-}) => {
+const ViewRequest = ({ fundsRequest }: { fundsRequest: FundsRequestType }) => {
   const expiryDate = spacetime(fundsRequest.expiryDate);
   const expired = expiryDate.isBefore(spacetime.now());
   return (

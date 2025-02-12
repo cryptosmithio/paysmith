@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
-import type { FundsRequestDataType } from '@/app/requestFunds/models';
 import {
   createInvoiceInvoicesPost,
   createTokenTokenPost,
@@ -12,7 +11,7 @@ import urlJoin from 'url-join';
 import type { DisplayInvoice } from '../bitcartApi/models';
 import { CurrencyType } from '../constants';
 import { authEncrypt } from '../crypt';
-
+import type { FundsRequestDocument } from '@/app/requestFunds/models';
 const permissions = ['full_control'];
 
 const bcConfig = {
@@ -71,7 +70,7 @@ export async function getEthRate() {
   return exchangeRate;
 }
 
-export const createInvoice = async (fr: FundsRequestDataType) => {
+export const createInvoice = async (fr: FundsRequestDocument) => {
   const headers = await getHeaders();
   const response = await createInvoiceInvoicesPost(
     {

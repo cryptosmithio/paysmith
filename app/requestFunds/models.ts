@@ -1,3 +1,4 @@
+'use server';
 import mongoose, * as pkg from 'mongoose';
 import {
   genTimestampsSchema,
@@ -6,7 +7,7 @@ import {
   toZodMongooseSchema,
 } from 'mongoose-zod';
 import { z } from 'zod';
-import { FundsRequestDataSchema } from './schemas';
+import { FundsRequestSchema } from './schemas';
 
 const { models } = pkg;
 
@@ -18,7 +19,7 @@ const fundsRequestZodMongooseSchema = toZodMongooseSchema(
         auto: true,
       }),
     })
-    .merge(FundsRequestDataSchema)
+    .merge(FundsRequestSchema)
     .merge(genTimestampsSchema()),
   {
     schemaOptions: {
@@ -40,13 +41,14 @@ const fundsRequestMongooseSchema = toMongooseSchema(
   }
 );
 
-export type FundsRequestDocumentType = InstanceType<typeof FundsRequest>;
+type FundsRequestDocumentType = z.infer<typeof fundsRequestZodMongooseSchema>;
+export type FundsRequestType = z.infer<typeof FundsRequestSchema>;
 
-export type FundsRequestDataType = z.infer<typeof FundsRequestDataSchema>;
+export type FundsRequestDocument = InstanceType<typeof FundsRequest>;
 
 export const FundsRequest = models?.FundsRequest
-  ? (models.FundsRequest as pkg.Model<typeof fundsRequestMongooseSchema>)
-  : mongoose.model<typeof fundsRequestMongooseSchema>(
+  ? (models.FundsRequest as pkg.Model<FundsRequestDocumentType>)
+  : mongoose.model<FundsRequestDocumentType>(
       'FundsRequest',
       fundsRequestMongooseSchema
     );
