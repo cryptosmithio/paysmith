@@ -40,9 +40,9 @@ const fundsRequestMongooseSchema = toMongooseSchema(
   }
 );
 
-export type FundsRequestDocument = InstanceType<typeof FundsRequest>;
+export type FundsRequestDocumentType = InstanceType<typeof FundsRequest>;
 
-export type FundsRequestDocumentType = z.infer<typeof FundsRequestDataSchema>;
+export type FundsRequestDataType = z.infer<typeof FundsRequestDataSchema>;
 
 export const FundsRequest = models?.FundsRequest
   ? (models.FundsRequest as pkg.Model<typeof fundsRequestMongooseSchema>)

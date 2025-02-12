@@ -1,12 +1,12 @@
 import { Avatar } from '@/app/components/ui/avatar';
-import type { FundsRequestDocumentType } from '@/app/requestFunds/models';
+import type { FundsRequestDataType } from '@/app/requestFunds/models';
 import { Button, Card, HStack, Stack, Text } from '@chakra-ui/react';
 import spacetime from 'spacetime';
 
 const ViewRequest = ({
   fundsRequest,
 }: {
-  fundsRequest: FundsRequestDocumentType;
+  fundsRequest: FundsRequestDataType;
 }) => {
   const expiryTime = spacetime(fundsRequest.createdAt).add(
     Number(fundsRequest.linkExpiry),

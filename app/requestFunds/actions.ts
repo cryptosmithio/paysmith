@@ -9,7 +9,7 @@ import {
 import { createInvoice } from '@/lib/server/bcUtil';
 import { redirect } from 'next/navigation';
 import { FundsRequestStatus } from './constants';
-import { FundsRequest, type FundsRequestDocument } from './models';
+import { FundsRequest, type FundsRequestDocumentType } from './models';
 import { FundsRequestDataSchema } from './schemas';
 
 export async function requestFundsAction(
@@ -33,7 +33,7 @@ export async function requestFundsAction(
   // Create FundsRequest document
   const fundsRequest = (await FundsRequest.create(
     parsedData
-  )) as FundsRequestDocument;
+  )) as FundsRequestDocumentType;
 
   // Create associated invoice
   const invoice = await createInvoice(fundsRequest);

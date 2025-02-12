@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
-import type { FundsRequestDocumentType } from '@/app/requestFunds/models';
+import type { FundsRequestDataType } from '@/app/requestFunds/models';
 import {
   createInvoiceInvoicesPost,
   createTokenTokenPost,
@@ -71,7 +71,7 @@ export async function getEthRate() {
   return exchangeRate;
 }
 
-export const createInvoice = async (fr: FundsRequestDocumentType) => {
+export const createInvoice = async (fr: FundsRequestDataType) => {
   const headers = await getHeaders();
   const response = await createInvoiceInvoicesPost(
     {
