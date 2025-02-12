@@ -34,6 +34,7 @@ export const FundsRequestDataSchema = zod.object({
   status: zod
     .nativeEnum(FundsRequestStatus)
     .default(FundsRequestStatus.CREATED),
+  expiryDate: zod.date().optional(),
 }); // Server side validation and object creation
 
 export const RequestFundsFormSchema = zod

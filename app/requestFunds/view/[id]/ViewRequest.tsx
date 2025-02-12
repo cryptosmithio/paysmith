@@ -8,11 +8,8 @@ const ViewRequest = ({
 }: {
   fundsRequest: FundsRequestDataType;
 }) => {
-  const expiryTime = spacetime(fundsRequest.createdAt).add(
-    Number(fundsRequest.linkExpiry),
-    'minutes'
-  );
-  const expired = expiryTime.isBefore(spacetime.now());
+  const expiryDate = spacetime(fundsRequest.expiryDate);
+  const expired = expiryDate.isBefore(spacetime.now());
   return (
     <Card.Root variant="elevated" boxShadow="lg" maxW={'md'} textStyle="sm">
       <Card.Header gap="1">
@@ -53,7 +50,7 @@ const ViewRequest = ({
           <Text fontWeight="semibold">Notes:</Text>
           <Text color="fg.muted">{fundsRequest.notes}</Text>
           <Text color={expired ? 'red' : 'green'}>
-            Expires: {expiryTime.toNativeDate().toLocaleString()}
+            Expires: {expiryDate.toNativeDate().toLocaleString()}
           </Text>
           <Text fontWeight="semibold">Status:</Text>
           <Text color="fg.muted">{fundsRequest.status}</Text>
