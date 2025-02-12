@@ -10,7 +10,7 @@ import { FundsRequestDataSchema } from './schemas';
 
 const { models } = pkg;
 
-const fundsRequestSchema = toZodMongooseSchema(
+const fundsRequestZodMongooseSchema = toZodMongooseSchema(
   z
     .object({
       _id: mongooseZodCustomType('ObjectId').mongooseTypeOptions({
@@ -28,7 +28,9 @@ const fundsRequestSchema = toZodMongooseSchema(
   }
 );
 
-const fundsRequestMongooseSchema = toMongooseSchema(fundsRequestSchema).index(
+const fundsRequestMongooseSchema = toMongooseSchema(
+  fundsRequestZodMongooseSchema
+).index(
   {
     bcInvoiceId: 1,
   },
@@ -40,11 +42,11 @@ const fundsRequestMongooseSchema = toMongooseSchema(fundsRequestSchema).index(
 
 export type FundsRequestDocument = InstanceType<typeof FundsRequest>;
 
-export type FundsRequestDocumentType = z.infer<typeof fundsRequestSchema>;
+export type FundsRequestDocumentType = z.infer<typeof FundsRequestDataSchema>;
 
 export const FundsRequest = models?.FundsRequest
-  ? (models.FundsRequest as pkg.Model<FundsRequestDocumentType>)
-  : mongoose.model<FundsRequestDocumentType>(
+  ? (models.FundsRequest as pkg.Model<typeof fundsRequestMongooseSchema>)
+  : mongoose.model<typeof fundsRequestMongooseSchema>(
       'FundsRequest',
       fundsRequestMongooseSchema
     );
