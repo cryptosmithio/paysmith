@@ -27,4 +27,5 @@ export enum FundsRequestStatus {
   IN_TRUST = 'IN TRUST',
   COMPLETED = 'COMPLETED',
   CANCELLED = 'CANCELLED',
+  EXPIRED = 'EXPIRED',
 }

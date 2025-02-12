@@ -1,3 +1,6 @@
+import { FundsRequestStatus } from '@/app/requestFunds/constants';
+import { FundsRequest } from '@/app/requestFunds/models';
+import { BCInvoiceStatus } from '@/lib/constants';
 import { authDecrypt } from '@/lib/crypt';
 import { env } from 'node:process';
 
@@ -11,7 +14,7 @@ export async function POST(
     const { token: encryptedToken } = await params;
     const jsonData = await request.json();
     const bcInvoiceId = jsonData.id as string;
-    const status = jsonData.status as string;
+    const status = jsonData.status as BCInvoiceStatus;
 
     const token = encryptedToken
       ? (authDecrypt(encryptedToken, env.AUTH_SALT ?? '') as string)
@@ -33,7 +36,29 @@ export async function POST(
       status,
     });
 
+    // Find the funds request based on the invoice ID
+    const fundsRequest = await FundsRequest.findOne({ bcInvoiceId });
+    if (!fundsRequest) {
+      console.error('Funds request not found for invoice:', bcInvoiceId);
+      return new Response(undefined, { status: 200 });
+    }
+
     // Update the funds request status based on the invoice status
+    switch (status) {
+      case BCInvoiceStatus.COMPLETE:
+        fundsRequest.status = FundsRequestStatus.COMPLETED;
+        await fundsRequest.save();
+        break;
+      case BCInvoiceStatus.EXPIRED:
+        fundsRequest.status = FundsRequestStatus.EXPIRED;
+        await fundsRequest.save();
+        break;
+      case BCInvoiceStatus.FAILED:
+      case BCInvoiceStatus.REFUNDED:
+      case BCInvoiceStatus.INVALID:
+      default:
+        break;
+    }
   } catch (error: any) {
     console.error(error);
     return new Response(`Webhook error: ${error.message}`, {

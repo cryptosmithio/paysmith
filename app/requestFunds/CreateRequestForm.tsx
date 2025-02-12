@@ -67,7 +67,7 @@ const RequestFundsForm = () => {
       linkExpirySelect: ['1'],
       trustPeriodSelect: ['24'],
       trustPeriod: '24',
-      linkExpiry: '60',
+      linkExpiry: '1',
       usdAmount: 0,
       amount: 0,
       recipientAddress: address,
