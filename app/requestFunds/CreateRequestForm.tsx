@@ -36,10 +36,7 @@ import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
 import { requestFundsAction } from './actions';
 import { LinkExpiryOptions, TrustPeriodOptions } from './constants';
-import {
-  RequestFundsFormSchema,
-  type RequestFundsFormSchemaType,
-} from './schemas';
+import { RequestFundsFormSchema } from './schemas';
 
 const RequestFundsForm = () => {
   const { address } = useAccount();
@@ -61,7 +58,7 @@ const RequestFundsForm = () => {
     formState: { errors },
     setValue,
     handleSubmit,
-  } = useForm<RequestFundsFormSchemaType>({
+  } = useForm<typeof RequestFundsFormSchema>({
     resolver: zodResolver(RequestFundsFormSchema),
     defaultValues: {
       linkExpirySelect: ['1'],
