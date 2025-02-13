@@ -1,4 +1,5 @@
 import { FundsRequestStatus } from '@/app/requestFunds/constants';
+import { FundsRequest } from '@/app/requestFunds/models';
 import { BCInvoiceStatus } from '@/lib/constants';
 import { authDecrypt } from '@/lib/server/crypt';
 import { env } from 'node:process';
@@ -36,7 +37,7 @@ export async function POST(
     });
 
     // Find the funds request based on the invoice ID
-    const fundsRequest = await FundsRequestDocument.findOne({ bcInvoiceId });
+    const fundsRequest = await FundsRequest.findOne({ bcInvoiceId });
     if (!fundsRequest) {
       console.error('Funds request not found for invoice:', bcInvoiceId);
       return new Response(undefined, { status: 200 });

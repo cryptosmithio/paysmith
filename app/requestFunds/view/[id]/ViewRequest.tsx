@@ -1,9 +1,18 @@
 'use client';
 import { Avatar } from '@/app/components/ui/avatar';
 import { getFundsRequestById } from '@/app/requestFunds/actions';
-import { Button, Card, HStack, Stack, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Card,
+  HStack,
+  Spinner,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import spacetime from 'spacetime';
+import { FundsRequestStatus } from '../../constants';
 const ViewRequest = ({ id }: { id: string }) => {
   const {
     data: fundsRequest,
@@ -12,15 +21,21 @@ const ViewRequest = ({ id }: { id: string }) => {
   } = useQuery({
     queryKey: ['fundsRequest', id],
     queryFn: () => getFundsRequestById(id),
+    refetchInterval: 10000,
   });
   if (error) {
     return <Text>Error loading funds request</Text>;
   }
   if (isLoading || !fundsRequest) {
-    return <Text>Loading...</Text>;
+    return (
+      <VStack colorPalette="teal" w={'vw'} h={'vh'} justifyContent={'center'}>
+        <Spinner color="colorPalette.600" />
+        <Text color="colorPalette.600">Loading...</Text>
+      </VStack>
+    );
   }
   const expiryDate = spacetime(fundsRequest.expiryDate);
-  const expired = expiryDate.isBefore(spacetime.now());
+  const expired = fundsRequest.status === FundsRequestStatus.EXPIRED;
 
   return (
     <Card.Root variant="elevated" boxShadow="lg" maxW={'md'} textStyle="sm">
