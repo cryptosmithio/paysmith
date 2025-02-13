@@ -1,6 +1,7 @@
 'use client';
 import { Avatar } from '@/app/components/ui/avatar';
 import { getFundsRequestById } from '@/app/requestFunds/actions';
+import { FundsRequestStatus } from '@/app/requestFunds/schemas';
 import {
   Button,
   Card,
@@ -12,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import spacetime from 'spacetime';
-import { FundsRequestStatus } from '../../schemas';
 const ViewRequest = ({ id }: { id: string }) => {
   const {
     data: fundsRequest,
