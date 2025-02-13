@@ -1,4 +1,5 @@
 'use client';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import {
   connectorsForWallets,
@@ -60,9 +61,8 @@ const config = createConfig({
   },
 });
 
-const queryClient = new QueryClient();
-
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [queryClient] = React.useState(() => new QueryClient());
   return (
     <Provider>
       <WagmiProvider config={config}>
@@ -70,6 +70,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <RainbowKitProvider theme={midnightTheme()}>
             {children}
           </RainbowKitProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </WagmiProvider>
     </Provider>

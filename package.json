@@ -40,6 +40,9 @@
   "devDependencies": {
     "@chakra-ui/cli": "^3.5.1",
     "@eslint/eslintrc": "^3.2.0",
+    "@tanstack/eslint-plugin-query": "^5.66.1",
+    "@tanstack/query-devtools": "^5.65.0",
+    "@tanstack/react-query-devtools": "^5.66.0",
     "eslint": "^9.19.0",
     "eslint-config-next": "15.1.6",
     "orval": "^7.5.0",

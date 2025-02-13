@@ -1,5 +1,4 @@
-import { FundsRequest, type FundsRequestType } from '@/app/requestFunds/models';
-import dbConnect from '@/lib/dbConnect';
+import { getFundsRequestById } from '../../actions';
 import ViewRequest from './ViewRequest';
 
 export default async function Page({
@@ -10,9 +9,6 @@ export default async function Page({
   const { id } = await params;
 
   // Load request from database
-  await dbConnect();
-  const fundsRequest = await FundsRequest.findById(id);
-  const fr = JSON.parse(JSON.stringify(fundsRequest)) as FundsRequestType;
-  return <ViewRequest fundsRequest={fr} />;
+  const fundsRequest = await getFundsRequestById(id);
+  return <ViewRequest fundsRequest={fundsRequest} id={id} />;
 }
-// Compare this snippet from lib/dbConnect.ts:
