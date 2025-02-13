@@ -1,17 +1,16 @@
 'use server';
 
-import dbConnect from '@/lib/server/dbConnect';
 import {
   parseFormData,
   ServerFormStatus,
   type ServerFormStateType,
 } from '@/lib/formUtil';
 import { createInvoice } from '@/lib/server/bcUtil';
+import dbConnect from '@/lib/server/dbConnect';
 import { redirect } from 'next/navigation';
 import spacetime from 'spacetime';
-import { FundsRequestStatus } from './constants';
 import { FundsRequest, type FundsRequestType } from './models';
-import { FundsRequestSchema } from './schemas';
+import { FundsRequestSchema, FundsRequestStatus } from './schemas';
 
 export async function requestFundsAction(
   prevState: ServerFormStateType,

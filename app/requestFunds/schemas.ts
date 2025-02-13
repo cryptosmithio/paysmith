@@ -1,11 +1,19 @@
 import { CurrencyType } from '@/lib/constants';
 import { isAddress } from 'viem';
 import * as zod from 'zod';
-import {
-  FundsRequestStatus,
-  LinkExpiryValues,
-  TrustPeriodValues,
-} from './constants';
+
+export const LinkExpiryValues = ['1', '30', '60', '90', '180'] as const;
+export const TrustPeriodValues = ['1', '8', '24', '48', '72', 'NONE'] as const;
+
+export enum FundsRequestStatus {
+  CREATED = 'CREATED',
+  AWAITING_FUNDS = 'AWAITING FUNDS',
+  FUNDS_DEPOSITED = 'FUNDS DEPOSITED',
+  IN_TRUST = 'IN TRUST',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+  EXPIRED = 'EXPIRED',
+}
 
 export const FundsRequestSchema = zod.object({
   recipientAddress: zod
@@ -47,3 +55,22 @@ export const RequestFundsFormSchema = zod
     usdAmount: zod.coerce.number().min(0, 'Amount must be greater than 0'),
   })
   .merge(FundsRequestSchema); // Client side validation
+
+export const LinkExpiryOptions = {
+  items: LinkExpiryValues.map(value => ({
+    value,
+    label: value === '1' ? '1 minute' : `${value} minutes`,
+  })),
+};
+
+export const TrustPeriodOptions = {
+  items: TrustPeriodValues.map(value => ({
+    value,
+    label:
+      value === 'NONE'
+        ? 'No Limit'
+        : value === '1'
+          ? '1 hour'
+          : `${value} hours`,
+  })),
+};

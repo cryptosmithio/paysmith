@@ -1,4 +1,3 @@
-
 import mongoose, * as pkg from 'mongoose';
 import {
   genTimestampsSchema,

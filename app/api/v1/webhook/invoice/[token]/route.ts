@@ -1,5 +1,5 @@
-import { FundsRequestStatus } from '@/app/requestFunds/constants';
 import { FundsRequest } from '@/app/requestFunds/models';
+import { FundsRequestStatus } from '@/app/requestFunds/schemas';
 import { BCInvoiceStatus } from '@/lib/constants';
 import { authDecrypt } from '@/lib/server/crypt';
 import { env } from 'node:process';

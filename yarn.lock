@@ -2080,10 +2080,17 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-2.1.0.tgz#052aa67a48eccc4309d7f0191b7e41434b90bb78"
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
-"@types/node@*", "@types/node@^22.12.0":
+"@types/node@*":
   version "22.13.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-22.13.1.tgz#a2a3fefbdeb7ba6b89f40371842162fac0934f33"
   integrity sha512-jK8uzQlrvXqEU91UxiK5J7pKHyzgnI1Qnl0QDHIgVGuolJhRb9EEl28Cj9b3rGR8B2lhFCtvIm5os8lFnO/1Ew==
+  dependencies:
+    undici-types "~6.20.0"
+
+"@types/node@^22.12.0":
+  version "22.13.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.13.2.tgz#6f401c5ccadac75354f5652128e9fcc3b0cf23b7"
+  integrity sha512-Z+r8y3XL9ZpI2EY52YYygAFmo2/oWfNSj4BCpAXE2McAexDk8VcnBMGC9Djn9gTKt4d2T/hhXqmPzo4hfIXtTg==
   dependencies:
     undici-types "~6.20.0"
 
@@ -3662,9 +3669,9 @@ bufferutil@^4.0.8:
     node-gyp-build "^4.3.0"
 
 bullmq@^5.40.0:
-  version "5.40.3"
-  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-5.40.3.tgz#675c7bb6c565ca17e802f827cc5428b31c105a62"
-  integrity sha512-ZHGHilK/A8wo5HHlPbwyOWMCEMRsyEmwFubEu98Xb7IyELyJCDn2hXYQVemG8dqFovkgIxXmerf4y3OHcmwmOQ==
+  version "5.40.4"
+  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-5.40.4.tgz#2aa4172f0b4b968e79e68c7c9a04c5feeeac6a10"
+  integrity sha512-MaIOhc31ZbVi9HbY0VAalsXoywelzEPNr6dojoKSMCXDnEVTQ27LkT5LA0Mlpr7ZunMLfpH94SLYrWNsPMsQrg==
   dependencies:
     cron-parser "^4.9.0"
     ioredis "^5.4.1"

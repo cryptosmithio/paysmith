@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import spacetime from 'spacetime';
-import { FundsRequestStatus } from '../../constants';
+import { FundsRequestStatus } from '../../schemas';
 const ViewRequest = ({ id }: { id: string }) => {
   const {
     data: fundsRequest,
