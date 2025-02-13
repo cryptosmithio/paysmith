@@ -1,4 +1,3 @@
-import { getFundsRequestById } from '../../actions';
 import ViewRequest from './ViewRequest';
 
 export default async function Page({
@@ -8,7 +7,5 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  // Load request from database
-  const fundsRequest = await getFundsRequestById(id);
-  return <ViewRequest fundsRequest={fundsRequest} id={id} />;
+  return <ViewRequest id={id} />;
 }
