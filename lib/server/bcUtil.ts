@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
+import type { FundsRequestDocument } from '@/app/requestFunds/models';
 import {
   createInvoiceInvoicesPost,
   createTokenTokenPost,
@@ -10,8 +11,7 @@ import axios from 'axios';
 import urlJoin from 'url-join';
 import type { DisplayInvoice } from '../bitcartApi/models';
 import { CurrencyType } from '../constants';
-import { authEncrypt } from '../crypt';
-import type { FundsRequestDocument } from '@/app/requestFunds/models';
+import { authEncrypt } from './crypt';
 const permissions = ['full_control'];
 
 const bcConfig = {

@@ -1,7 +1,6 @@
 import { FundsRequestStatus } from '@/app/requestFunds/constants';
-import { FundsRequestDocument } from '@/app/requestFunds/models';
 import { BCInvoiceStatus } from '@/lib/constants';
-import { authDecrypt } from '@/lib/crypt';
+import { authDecrypt } from '@/lib/server/crypt';
 import { env } from 'node:process';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
