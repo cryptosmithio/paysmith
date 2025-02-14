@@ -12,7 +12,7 @@ import spacetime from 'spacetime';
 import { FundsRequest, type FundsRequestType } from './models';
 import { FundsRequestSchema, FundsRequestStatus } from './schemas';
 
-export async function requestFundsAction(
+export async function createFundsRequest(
   prevState: ServerFormStateType,
   data: FormData
 ) {

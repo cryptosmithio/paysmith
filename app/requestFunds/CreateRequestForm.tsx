@@ -34,14 +34,17 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
-import { requestFundsAction } from './actions';
-import { RequestFundsFormSchema } from './schemas';
+import type {
+  LinkExpiryOptions,
+  RequestFundsFormSchema,
+  TrustPeriodOptions,
+} from './schemas';
 
 const RequestFundsForm = () => {
   const { address } = useAccount();
   const formRef = useRef<HTMLFormElement>(null);
   const [serverState, formAction, isPending] = useActionState(
-    requestFundsAction,
+    createFundsRequest,
     {
       message: '',
       fields: {},
