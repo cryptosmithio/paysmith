@@ -1,4 +1,4 @@
-import ViewRequest from './ViewRequest';
+import ViewRequest from '../../../components/ViewRequest';
 
 export default async function Page({
   params,
