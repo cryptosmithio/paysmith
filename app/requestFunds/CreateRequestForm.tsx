@@ -5,6 +5,7 @@ import { Field } from '@/app/components/ui/field';
 import { CurrencyType } from '@/lib/constants';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import { getEthRate } from '@/lib/server/bcUtil';
+import { createFundsRequest } from '@/app/requestFunds/actions';
 import {
   Card,
   CardBody,
@@ -34,7 +35,7 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
-import type {
+import {
   LinkExpiryOptions,
   RequestFundsFormSchema,
   TrustPeriodOptions,

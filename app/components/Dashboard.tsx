@@ -4,7 +4,7 @@ import SendFundsForm from '@/app/send/SendFundsForm';
 import { Box, Tabs, useTabs } from '@chakra-ui/react';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { useAccount } from 'wagmi';
-import CreateRequestForm from '../requestFunds/CreateRequestForm';
+import CreateRequestForm from '@/app/requestFunds/CreateRequestForm';
 const Transactions = () => {
   return <Box>Transactions</Box>;
 };
