@@ -59,7 +59,7 @@ function getInitials(name: string) {
     : firstName.charAt(0);
 }
 
-interface AvatarGroupProps extends GroupProps, SlotRecipeProps<'avatar'> {}
+interface AvatarGroupProps extends GroupProps, SlotRecipeProps<'avatar'> { }
 
 export const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
   function AvatarGroup(props, ref) {

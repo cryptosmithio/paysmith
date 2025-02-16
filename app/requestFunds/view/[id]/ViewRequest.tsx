@@ -5,7 +5,7 @@ import { FundsRequestStatus } from '@/app/requestFunds/schemas';
 import { Button, Card, HStack, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import spacetime from 'spacetime';
-const ViewRequest = ({ id }: { id: string }) => {
+const ViewRequest = ({ id }: { id: string; }) => {
   const {
     data: fundsRequest,
     error,

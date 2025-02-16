@@ -1,10 +1,10 @@
 'use client';
 
+import CreateRequestForm from '@/app/requestFunds/CreateRequestForm';
 import SendFundsForm from '@/app/send/SendFundsForm';
 import { Box, Tabs, useTabs } from '@chakra-ui/react';
 import { LuRows3, LuSend, LuShare } from 'react-icons/lu';
 import { useAccount } from 'wagmi';
-import CreateRequestForm from '@/app/requestFunds/CreateRequestForm';
 const Transactions = () => {
   return <Box>Transactions</Box>;
 };

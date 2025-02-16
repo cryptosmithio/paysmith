@@ -50,4 +50,4 @@ export const FundsRequest = models?.FundsRequest
   : mongoose.model<FundsRequestDocumentType>(
       'FundsRequest',
       fundsRequestMongooseSchema
-    );
+  );

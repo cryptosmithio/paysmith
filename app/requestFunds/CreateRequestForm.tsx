@@ -2,10 +2,10 @@
 import { Avatar } from '@/app/components/ui/avatar';
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
+import { createFundsRequest } from '@/app/requestFunds/actions';
 import { CurrencyType } from '@/lib/constants';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import { getEthRate } from '@/lib/server/bcUtil';
-import { createFundsRequest } from '@/app/requestFunds/actions';
 import {
   Card,
   CardBody,

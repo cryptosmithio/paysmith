@@ -7,7 +7,7 @@ import { env } from 'node:process';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function POST(
   request: Request,
-  { params }: { params: Promise<{ token: string }> }
+  { params }: { params: Promise<{ token: string; }>; }
 ) {
   try {
     // Process the webhook payload

@@ -80,7 +80,7 @@ const MenuItem = ({
   );
 };
 
-const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
+const MenuLinks = ({ isOpen }: { isOpen: boolean; }) => {
   return (
     <Box
       display={{ base: isOpen ? 'block' : 'none', md: 'block' }}

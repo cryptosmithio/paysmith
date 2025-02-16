@@ -8,7 +8,7 @@ import * as React from 'react';
 import { LuMoon, LuSun } from 'react-icons/lu';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ColorModeProviderProps extends ThemeProviderProps {}
+export interface ColorModeProviderProps extends ThemeProviderProps { }
 
 export function ColorModeProvider(props: ColorModeProviderProps) {
   return (
@@ -39,7 +39,7 @@ export function ColorModeIcon() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ColorModeButtonProps extends Omit<IconButtonProps, 'aria-label'> {}
+interface ColorModeButtonProps extends Omit<IconButtonProps, 'aria-label'> { }
 
 export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
