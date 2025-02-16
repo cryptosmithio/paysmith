@@ -1,7 +1,7 @@
 'use server';
 
 import { parseFormData, type ServerFormStateType } from '@/lib/formUtil';
-import { SendDataSchema } from './common';
+import { SendDataSchema } from './schemas';
 export async function sendFundsAction(
   prevState: ServerFormStateType,
   data: FormData

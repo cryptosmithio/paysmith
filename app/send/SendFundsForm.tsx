@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/components/ui/button';
 import { Field } from '@/app/components/ui/field';
-import { SendFormSchema, type SendFormSchemaType } from '@/app/send/common';
+import { SendFormSchema, type SendFormSchemaType } from '@/app/send/schemas';
 import { ServerFormStatus, type ServerFormStateType } from '@/lib/formUtil';
 import { getEthRate } from '@/lib/server/bcUtil';
 import { HStack, Input, InputAddon, VStack } from '@chakra-ui/react';
