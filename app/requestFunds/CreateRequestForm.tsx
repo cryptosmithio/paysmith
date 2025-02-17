@@ -61,7 +61,7 @@ const RequestFundsForm = () => {
     formState: { errors },
     setValue,
     handleSubmit,
-  } = useForm<typeof RequestFundsFormSchema>({
+  } = useForm({
     resolver: zodResolver(RequestFundsFormSchema),
     defaultValues: {
       linkExpirySelect: ['1'],
@@ -72,6 +72,9 @@ const RequestFundsForm = () => {
       amount: 0,
       recipientAddress: address,
       currency: CurrencyType.ETH,
+      notes: '',
+      recipientName: '',
+      recipientAvatar: '',
     },
     progressive: true,
   });
