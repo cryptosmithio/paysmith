@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "declaration": true,
     "plugins": [
       {
@@ -27,13 +27,15 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "incremental": true
   },
   "include": [
     "app/**/*.ts",
     "app/**/*.tsx",
     "lib/**/*.ts",
-    "lib/**/*.tsx"
+    "lib/**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules/**/*",
@@ -42,6 +44,6 @@
     "lib/**/*.test.tsx",
     "app/**/*.test.ts",
     "app/**/*.test.tsx",
-    "lib/bitcartApp/**/*",
+    "lib/bitcartApp/**/*"
   ]
 }
