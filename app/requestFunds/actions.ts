@@ -11,6 +11,7 @@ import { redirect } from 'next/navigation';
 import spacetime from 'spacetime';
 import { FundsRequest, type FundsRequestType } from './models';
 import { FundsRequestSchema, FundsRequestStatus } from './schemas';
+import type { BCPaymentType } from '@/lib/constants';
 
 export async function createFundsRequest(
   prevState: ServerFormStateType,
@@ -45,7 +46,13 @@ export async function createFundsRequest(
   fundsRequest.status = FundsRequestStatus.AWAITING_FUNDS;
   await fundsRequest.save();
 
+  const currentPayment = invoice?.payments?.[
+    invoice?.payments?.length - 1
+  ] as BCPaymentType;
+
   console.log('Funds request created:', fundsRequest);
+  console.log('Invoice created:', invoice);
+  console.log('Current payment:', currentPayment);
   // nextState.returnData = {
   //   fundsRequest: fundsRequest.toJSON({
   //     flattenMaps: true,

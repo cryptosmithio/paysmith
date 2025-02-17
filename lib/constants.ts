@@ -8,6 +8,24 @@ export enum BCInvoiceStatus {
   REFUNDED = 'refunded',
 }
 
+export type BCPaymentType = {
+  created: string;
+  lightning: boolean;
+  currency: string;
+  amount: string;
+  rate: string;
+
+  payment_address: string;
+
+  user_address: string;
+
+  payment_url: string;
+  confirmations: number;
+
+  chain_id: number;
+  id: string;
+};
+
 export enum PayoutStatus {
   PENDING = 'pending',
   APPROVED = 'approved',
