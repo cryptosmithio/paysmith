@@ -35,6 +35,7 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { LuShare } from 'react-icons/lu';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
+import { Spinner } from '../components/Spinner';
 import {
   LinkExpiryOptions,
   RequestFundsFormSchema,
@@ -131,6 +132,10 @@ const RequestFundsForm = () => {
   const { data: ensAvatar } = useEnsAvatar({ name: ensName as string });
   if (ensAvatar) {
     setValue('recipientAvatar', ensAvatar);
+  }
+
+  if (isPending) {
+    return <Spinner />;
   }
 
   return (
