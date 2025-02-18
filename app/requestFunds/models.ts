@@ -48,6 +48,6 @@ export type FundsRequestDocument = InstanceType<typeof FundsRequest>;
 export const FundsRequest = models?.FundsRequest
   ? (models.FundsRequest as pkg.Model<FundsRequestDocumentType>)
   : mongoose.model<FundsRequestDocumentType>(
-      'FundsRequest',
-      fundsRequestMongooseSchema
+    'FundsRequest',
+    fundsRequestMongooseSchema
   );

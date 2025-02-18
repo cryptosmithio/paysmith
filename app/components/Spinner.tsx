@@ -12,8 +12,6 @@ export const Spinner = (
   return (
     <VStack
       colorPalette="teal"
-      w={'vw'}
-      h={'vh'}
       justifyContent={'center'}
       {...props}
     >

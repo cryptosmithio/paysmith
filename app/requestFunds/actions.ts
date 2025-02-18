@@ -1,5 +1,6 @@
 'use server';
 
+import type { BCPaymentType } from '@/lib/constants';
 import {
   parseFormData,
   ServerFormStatus,
@@ -11,7 +12,6 @@ import { redirect } from 'next/navigation';
 import spacetime from 'spacetime';
 import { FundsRequest, type FundsRequestType } from './models';
 import { FundsRequestSchema, FundsRequestStatus } from './schemas';
-import type { BCPaymentType } from '@/lib/constants';
 
 export async function createFundsRequest(
   prevState: ServerFormStateType,

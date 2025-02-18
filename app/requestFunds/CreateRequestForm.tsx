@@ -33,7 +33,7 @@ import {
   useState,
 } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { LuShare } from 'react-icons/lu';
+import { FaEthereum } from 'react-icons/fa6';
 import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
 import { Spinner } from '../components/Spinner';
 import {
@@ -97,7 +97,6 @@ const RequestFundsForm = () => {
       const rate = await getEthRate();
       setExchangeRate(rate);
     }
-
     fetchExchangeRate();
   }, []);
 
@@ -132,10 +131,6 @@ const RequestFundsForm = () => {
   const { data: ensAvatar } = useEnsAvatar({ name: ensName as string });
   if (ensAvatar) {
     setValue('recipientAvatar', ensAvatar);
-  }
-
-  if (isPending) {
-    return <Spinner />;
   }
 
   return (
@@ -294,10 +289,13 @@ const RequestFundsForm = () => {
               )}
             />
           </Field>
-          <Button type="submit" mt={2} disabled={isPending}>
-            <LuShare />
-            Generate Link
-          </Button>
+          {!isPending && (
+            <Button type="submit" mt={2} disabled={isPending}>
+              <FaEthereum />
+              Create Funds Request
+            </Button>
+          )}
+          {isPending && <Spinner w={'100%'} h={'100%'} />}
         </CardBody>
       </Card.Root>
       <input type="hidden" {...register('linkExpiry')} />

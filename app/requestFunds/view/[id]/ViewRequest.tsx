@@ -1,9 +1,11 @@
 'use client';
 import { Avatar } from '@/app/components/ui/avatar';
+import { ClipboardIconButton, ClipboardRoot } from '@/app/components/ui/clipboard';
 import { getFundsRequestById } from '@/app/requestFunds/actions';
 import { FundsRequestStatus } from '@/app/requestFunds/schemas';
 import { Button, Card, HStack, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import { FaEthereum } from 'react-icons/fa6';
 import spacetime from 'spacetime';
 const ViewRequest = ({ id }: { id: string; }) => {
   const {
@@ -23,6 +25,7 @@ const ViewRequest = ({ id }: { id: string; }) => {
   }
   const expiryDate = spacetime(fundsRequest.expiryDate);
   const expired = fundsRequest.status === FundsRequestStatus.EXPIRED;
+  const url = window.location.href;
 
   return (
     <Card.Root variant="elevated" boxShadow="lg" maxW={'md'} textStyle="sm">
@@ -70,8 +73,16 @@ const ViewRequest = ({ id }: { id: string; }) => {
           <Text color="fg.muted">{fundsRequest.status}</Text>
         </Stack>
       </Card.Body>
-      <Card.Footer>
-        <Button width="full">Pay</Button>
+      <Card.Footer justifyContent={'center'}>
+        <HStack gap={4} justify={'center'}>
+          <ClipboardRoot value={url}>
+            <ClipboardIconButton bgColor={'white'} color={"black"} />
+          </ClipboardRoot>
+          <Button >
+            <FaEthereum />
+            Pay
+          </Button>
+        </HStack>
       </Card.Footer>
     </Card.Root>
   );
