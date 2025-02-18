@@ -5,8 +5,10 @@ import { getFundsRequestById } from '@/app/requestFunds/actions';
 import { FundsRequestStatus } from '@/app/requestFunds/schemas';
 import { Button, Card, HStack, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { FaEthereum } from 'react-icons/fa6';
 import spacetime from 'spacetime';
+import { useAccount } from 'wagmi';
 const ViewRequest = ({ id }: { id: string; }) => {
   const {
     data: fundsRequest,
@@ -17,16 +19,24 @@ const ViewRequest = ({ id }: { id: string; }) => {
     queryFn: () => getFundsRequestById(id),
     refetchInterval: 10000,
   });
+  const [isPending, setIsPending] = useState(false);
+  const account = useAccount();
+
   if (error) {
     return <Text>Error loading funds request</Text>;
   }
-  if (isLoading || !fundsRequest) {
-    return <Spinner />;
-  }
+
   const expiryDate = spacetime(fundsRequest.expiryDate);
   const expired = fundsRequest.status === FundsRequestStatus.EXPIRED;
   const url = window.location.href;
 
+  const payRequest = () => {
+    setIsPending(true);
+  };
+
+  if (isLoading || !fundsRequest) {
+    return <Spinner />;
+  }
   return (
     <Card.Root variant="elevated" boxShadow="lg" maxW={'md'} textStyle="sm">
       <Card.Header gap="1">
@@ -75,13 +85,17 @@ const ViewRequest = ({ id }: { id: string; }) => {
       </Card.Body>
       <Card.Footer justifyContent={'center'}>
         <HStack gap={4} justify={'center'}>
-          <ClipboardRoot value={url}>
-            <ClipboardIconButton bgColor={'white'} color={"black"} />
-          </ClipboardRoot>
-          <Button >
-            <FaEthereum />
-            Pay
-          </Button>
+          {!isPending && (
+            <><ClipboardRoot value={url}>
+              <ClipboardIconButton bgColor={'white'} color={"black"} />
+            </ClipboardRoot>
+
+              <Button onClick={payRequest} disabled={isPending}>
+                <FaEthereum />
+                Pay
+              </Button></>
+          )}
+          {isPending && <Spinner size={"md"} color={'white'} />}
         </HStack>
       </Card.Footer>
     </Card.Root>
