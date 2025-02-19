@@ -1,11 +1,12 @@
 'use client';
 import { Avatar } from '@/app/components/ui/avatar';
 import { ClipboardIconButton, ClipboardRoot } from '@/app/components/ui/clipboard';
-import { getFundsRequestById } from '@/app/requestFunds/actions';
+import { getFundsRequestById, initiateFundsPayment } from '@/app/requestFunds/actions';
 import { FundsRequestStatus } from '@/app/requestFunds/schemas';
-import { Button, Card, HStack, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Button, Card, HStack, Spinner, Stack, Text, VStack } from '@chakra-ui/react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa6';
 import spacetime from 'spacetime';
 import { useAccount } from 'wagmi';
@@ -21,22 +22,26 @@ const ViewRequest = ({ id }: { id: string; }) => {
   });
   const [isPending, setIsPending] = useState(false);
   const account = useAccount();
-
-  if (error) {
-    return <Text>Error loading funds request</Text>;
-  }
-
-  const expiryDate = spacetime(fundsRequest.expiryDate);
-  const expired = fundsRequest.status === FundsRequestStatus.EXPIRED;
   const url = window.location.href;
+  const expired = !fundsRequest || fundsRequest.status === FundsRequestStatus.EXPIRED;
+  const [canPay, setCanPay] = useState(account.isConnected && !expired && !isPending);
 
   const payRequest = () => {
     setIsPending(true);
+    initiateFundsPayment(fundsRequest!.bcInvoiceId, account.address as string);
+    setIsPending(false);
   };
-
+  useEffect(() => {
+    setCanPay(account.isConnected && !expired && !isPending);
+  }, [account.isConnected, expired, isPending]);
+  if (error) {
+    return <Text>Error loading funds request</Text>;
+  }
   if (isLoading || !fundsRequest) {
     return <Spinner />;
   }
+  const expiryDate = spacetime(fundsRequest.expiryDate);
+
   return (
     <Card.Root variant="elevated" boxShadow="lg" maxW={'md'} textStyle="sm">
       <Card.Header gap="1">
@@ -84,22 +89,24 @@ const ViewRequest = ({ id }: { id: string; }) => {
         </Stack>
       </Card.Body>
       <Card.Footer justifyContent={'center'}>
-        <HStack gap={4} justify={'center'}>
-          {!isPending && (
-            <><ClipboardRoot value={url}>
+        <VStack>
+          <HStack>
+            <ConnectButton />
+          </HStack>
+          <HStack gap={4} mt={4} justify={'center'}>
+            <ClipboardRoot value={url}>
               <ClipboardIconButton bgColor={'white'} color={"black"} />
             </ClipboardRoot>
+            <Button onClick={payRequest} disabled={!canPay} >
+              <FaEthereum />
+              Pay
+            </Button>
+            {isPending && <Spinner size={"md"} color={'white'} />}
+          </HStack>
 
-              <Button onClick={payRequest} disabled={isPending}>
-                <FaEthereum />
-                Pay
-              </Button></>
-          )}
-          {isPending && <Spinner size={"md"} color={'white'} />}
-        </HStack>
+        </VStack>
       </Card.Footer>
     </Card.Root>
   );
 };
-
 export default ViewRequest;

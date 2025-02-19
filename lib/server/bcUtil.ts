@@ -4,13 +4,15 @@ import type { FundsRequestDocument } from '@/app/requestFunds/models';
 import {
   createInvoiceInvoicesPost,
   createTokenTokenPost,
+  getInvoiceByIdInvoicesModelIdGet,
   modifyInvoiceInvoicesModelIdPatch,
   rateCryptosRateGet,
+  updatePaymentDetailsInvoicesModelIdDetailsPatch,
 } from '@/lib/bitcartApi';
 import axios from 'axios';
 import urlJoin from 'url-join';
 import type { DisplayInvoice } from '../bitcartApi/models';
-import { CurrencyType } from '../constants';
+import { CurrencyType, type BCPaymentType } from '../constants';
 import { authEncrypt } from './crypt';
 const permissions = ['full_control'];
 
@@ -103,4 +105,21 @@ export const createInvoice = async (fr: FundsRequestDocument) => {
 
   modifyInvoiceInvoicesModelIdPatch(invoice.id!, invoice, headers);
   return invoice;
+};
+
+export const getInvoiceById = async (id: string) => {
+  const headers = await getHeaders();
+  return await getInvoiceByIdInvoicesModelIdGet(id, headers) as DisplayInvoice;
+};
+
+export const updatePaymentAddressByInvoiceId = async (BCInvoiceId: string, address: string) => {
+  const headers = await getHeaders();
+  const invoice = await getInvoiceByIdInvoicesModelIdGet(BCInvoiceId, headers) as DisplayInvoice;
+  const payments = invoice?.payments;
+  const firstPayment = payments?.[payments?.length - 1] as BCPaymentType;
+  await updatePaymentDetailsInvoicesModelIdDetailsPatch(BCInvoiceId,
+    {
+      id: firstPayment.id,
+      address: address
+    }, headers);
 };

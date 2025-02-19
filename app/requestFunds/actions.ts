@@ -6,7 +6,7 @@ import {
   ServerFormStatus,
   type ServerFormStateType,
 } from '@/lib/formUtil';
-import { createInvoice } from '@/lib/server/bcUtil';
+import { createInvoice, updatePaymentAddressByInvoiceId } from '@/lib/server/bcUtil';
 import dbConnect from '@/lib/server/dbConnect';
 import { redirect } from 'next/navigation';
 import spacetime from 'spacetime';
@@ -63,9 +63,12 @@ export async function createFundsRequest(
   // return nextState;
   redirect(`/requestFunds/view/${fundsRequest._id}`);
 }
-
 export async function getFundsRequestById(id: string) {
   await dbConnect();
   const fundsRequest = await FundsRequest.findById(id);
   return JSON.parse(JSON.stringify(fundsRequest)) as FundsRequestType;
+}
+
+export async function initiateFundsPayment(bcInvoiceId: string, address: string) {
+  updatePaymentAddressByInvoiceId(bcInvoiceId, address);
 }
