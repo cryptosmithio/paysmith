@@ -22,14 +22,13 @@ const ViewRequest = ({ id }: { id: string; }) => {
   });
   const [isPending, setIsPending] = useState(false);
   const account = useAccount();
-  const url = window.location.href;
   const expired = !fundsRequest || fundsRequest.status === FundsRequestStatus.EXPIRED;
   const [canPay, setCanPay] = useState(account.isConnected && !expired && !isPending);
   const { data: hash, sendTransaction } = useSendTransaction();
-
-  const payRequest = () => {
+  const [viewUrl, setViewUrl] = useState('');
+  const payRequest = async () => {
     setIsPending(true);
-    initiateFundsPayment(fundsRequest!.bcInvoiceId, account.address as string);
+    await initiateFundsPayment(fundsRequest!.bcInvoiceId, account.address as string);
     sendTransaction({
       to: fundsRequest!.recipientAddress,
       value: fundsRequest!.amount,
@@ -41,6 +40,10 @@ const ViewRequest = ({ id }: { id: string; }) => {
   useEffect(() => {
     setCanPay(account.isConnected && !expired && !isPending);
   }, [account.isConnected, expired, isPending]);
+
+  useEffect(() => {
+    setViewUrl(window.location.href);
+  }, []);
   if (error) {
     return <Text>Error loading funds request</Text>;
   }
@@ -101,7 +104,7 @@ const ViewRequest = ({ id }: { id: string; }) => {
             <ConnectButton />
           </HStack>
           <HStack gap={4} mt={4} justify={'center'}>
-            <ClipboardRoot value={url}>
+            <ClipboardRoot value={viewUrl}>
               <ClipboardIconButton bgColor={'white'} color={"black"} />
             </ClipboardRoot>
             <Button onClick={payRequest} disabled={!canPay} >

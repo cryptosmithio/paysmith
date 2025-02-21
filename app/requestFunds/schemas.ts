@@ -43,6 +43,11 @@ export const FundsRequestSchema = zod.object({
     .nativeEnum(FundsRequestStatus)
     .default(FundsRequestStatus.CREATED),
   expiryDate: zod.date().optional(),
+  trustAddress: zod
+    .string()
+    .refine(value => {
+      return isAddress(value);
+    }, 'Address must be valid Ethereum address').optional(),
 }); // Server side validation and object creation
 
 export const RequestFundsFormSchema = zod

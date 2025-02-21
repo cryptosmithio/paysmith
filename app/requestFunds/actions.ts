@@ -42,13 +42,14 @@ export async function createFundsRequest(
 
   // Create associated invoice
   const invoice = await createInvoice(fundsRequest);
-  fundsRequest.bcInvoiceId = invoice.id;
-  fundsRequest.status = FundsRequestStatus.AWAITING_FUNDS;
-  await fundsRequest.save();
-
   const currentPayment = invoice?.payments?.[
     invoice?.payments?.length - 1
   ] as BCPaymentType;
+  // Update FundsRequest document
+  fundsRequest.bcInvoiceId = invoice.id;
+  fundsRequest.status = FundsRequestStatus.AWAITING_FUNDS;
+  fundsRequest.trustAddress = currentPayment?.payment_address as `0x${string}`;
+  await fundsRequest.save();
 
   console.log('Funds request created:', fundsRequest);
   console.log('Invoice created:', invoice);
