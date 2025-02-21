@@ -70,6 +70,14 @@ export async function getFundsRequestById(id: string) {
   return JSON.parse(JSON.stringify(fundsRequest)) as FundsRequestType;
 }
 
-export async function initiateFundsPayment(bcInvoiceId: string, address: string) {
-  updatePaymentAddressByInvoiceId(bcInvoiceId, address);
+export async function initiateFundsPayment(fundsRequestId: string, bcInvoiceId: string, sender: {
+  address: string;
+  name?: string;
+  avatar?: string;
+  notes?: string;
+}) {
+  await dbConnect();
+  FundsRequest.updateOne({ _id: fundsRequestId },
+    { status: FundsRequestStatus.PAYMENT_INITIATED, senderAddress: sender.address, senderName: sender.name, senderAvatar: sender.avatar, senderNotes: sender.notes });
+  updatePaymentAddressByInvoiceId(bcInvoiceId, sender.address);
 }

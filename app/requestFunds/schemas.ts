@@ -8,6 +8,8 @@ export const TrustPeriodValues = ['1', '8', '24', '48', '72', 'NONE'] as const;
 export enum FundsRequestStatus {
   CREATED = 'CREATED',
   AWAITING_FUNDS = 'AWAITING FUNDS',
+
+  PAYMENT_INITIATED = 'PAYMENT INITIATED',
   FUNDS_DEPOSITED = 'FUNDS DEPOSITED',
   IN_TRUST = 'IN TRUST',
   COMPLETED = 'COMPLETED',
@@ -48,6 +50,14 @@ export const FundsRequestSchema = zod.object({
     .refine(value => {
       return isAddress(value);
     }, 'Address must be valid Ethereum address').optional(),
+  senderAddress: zod.
+    string()
+    .refine(value => {
+      return isAddress(value);
+    }, 'Address must be valid Ethereum address').optional(),
+  senderName: zod.string().max(50, 'Name must be less than 50 characters').optional(),
+  senderAvatar: zod.string().optional(),
+  senderNotes: zod.string().max(255, 'Notes must be less than 255 characters').optional(),
 }); // Server side validation and object creation
 
 export const RequestFundsFormSchema = zod

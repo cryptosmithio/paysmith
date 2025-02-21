@@ -1,16 +1,35 @@
 'use client';
 import { Avatar } from '@/app/components/ui/avatar';
-import { ClipboardIconButton, ClipboardRoot } from '@/app/components/ui/clipboard';
-import { getFundsRequestById, initiateFundsPayment } from '@/app/requestFunds/actions';
+import {
+  ClipboardIconButton,
+  ClipboardRoot,
+} from '@/app/components/ui/clipboard';
+import {
+  getFundsRequestById,
+  initiateFundsPayment,
+} from '@/app/requestFunds/actions';
 import { FundsRequestStatus } from '@/app/requestFunds/schemas';
-import { Button, Card, HStack, Spinner, Stack, Text, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  Card,
+  HStack,
+  Spinner,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa6';
 import spacetime from 'spacetime';
-import { useAccount, useSendTransaction } from 'wagmi';
-const ViewRequest = ({ id }: { id: string; }) => {
+import {
+  useAccount,
+  useEnsAvatar,
+  useEnsName,
+  useSendTransaction,
+} from 'wagmi';
+const ViewRequest = ({ id }: { id: string }) => {
   const {
     data: fundsRequest,
     error,
@@ -22,21 +41,34 @@ const ViewRequest = ({ id }: { id: string; }) => {
   });
   const [isPending, setIsPending] = useState(false);
   const account = useAccount();
-  const expired = !fundsRequest || fundsRequest.status === FundsRequestStatus.EXPIRED;
-  const [canPay, setCanPay] = useState(account.isConnected && !expired && !isPending);
+  const expired =
+    !fundsRequest || fundsRequest.status === FundsRequestStatus.EXPIRED;
+  const [canPay, setCanPay] = useState(
+    account.isConnected && !expired && !isPending
+  );
   const { data: hash, sendTransaction } = useSendTransaction();
   const [viewUrl, setViewUrl] = useState('');
+  const { data: ensName } = useEnsName({ address: account.address });
+  const { data: ensAvatar } = useEnsAvatar({
+    name: ensName,
+  });
+
   const payRequest = async () => {
     setIsPending(true);
-    await initiateFundsPayment(fundsRequest!.bcInvoiceId, account.address as string);
+    await initiateFundsPayment(id, fundsRequest!.bcInvoiceId, {
+      address: account.address,
+      name: ensName,
+      avatar: ensAvatar,
+    });
     sendTransaction({
-      to: fundsRequest!.recipientAddress,
+      to: fundsRequest!.trustAddress,
       value: fundsRequest!.amount,
     });
     setIsPending(false);
 
     return hash;
   };
+
   useEffect(() => {
     setCanPay(account.isConnected && !expired && !isPending);
   }, [account.isConnected, expired, isPending]);
@@ -44,6 +76,7 @@ const ViewRequest = ({ id }: { id: string; }) => {
   useEffect(() => {
     setViewUrl(window.location.href);
   }, []);
+
   if (error) {
     return <Text>Error loading funds request</Text>;
   }
@@ -105,15 +138,14 @@ const ViewRequest = ({ id }: { id: string; }) => {
           </HStack>
           <HStack gap={4} mt={4} justify={'center'}>
             <ClipboardRoot value={viewUrl}>
-              <ClipboardIconButton bgColor={'white'} color={"black"} />
+              <ClipboardIconButton bgColor={'white'} color={'black'} />
             </ClipboardRoot>
-            <Button onClick={payRequest} disabled={!canPay} >
+            <Button onClick={payRequest} disabled={!canPay}>
               <FaEthereum />
               Pay
             </Button>
-            {isPending && <Spinner size={"md"} color={'white'} />}
+            {isPending && <Spinner size={'md'} color={'white'} />}
           </HStack>
-
         </VStack>
       </Card.Footer>
     </Card.Root>
