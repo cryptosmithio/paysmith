@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa6';
 import spacetime from 'spacetime';
-import { useAccount } from 'wagmi';
+import { useAccount, useSendTransaction } from 'wagmi';
 const ViewRequest = ({ id }: { id: string; }) => {
   const {
     data: fundsRequest,
@@ -25,11 +25,18 @@ const ViewRequest = ({ id }: { id: string; }) => {
   const url = window.location.href;
   const expired = !fundsRequest || fundsRequest.status === FundsRequestStatus.EXPIRED;
   const [canPay, setCanPay] = useState(account.isConnected && !expired && !isPending);
+  const { data: hash, sendTransaction } = useSendTransaction();
 
   const payRequest = () => {
     setIsPending(true);
     initiateFundsPayment(fundsRequest!.bcInvoiceId, account.address as string);
+    sendTransaction({
+      to: fundsRequest!.recipientAddress,
+      value: fundsRequest!.amount,
+    });
     setIsPending(false);
+
+    return hash;
   };
   useEffect(() => {
     setCanPay(account.isConnected && !expired && !isPending);

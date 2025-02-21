@@ -187,9 +187,9 @@
     "@babel/helper-validator-identifier" "^7.25.9"
 
 "@chakra-ui/cli@^3.5.1":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/cli/-/cli-3.8.0.tgz#4f9e9462558e447b1717fe869e05869e02340ff3"
-  integrity sha512-W3ylRSLIAOEBH0VZGCNh76TU6juY7aiQA74PnrIsxXaavgxr5csanh/PoGdCD+harBx/4wJrz1sZjeXZrbuvsw==
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/cli/-/cli-3.8.1.tgz#77a2affd8a59e237b9c75e745e3fccd5af73d390"
+  integrity sha512-k4U6Ik9GFh3ntroVhlxRZzuQWiGXDFfMCa0js8qp7sfWoT7Vqyxc2uTiUB/+x3mGFhK7oaMYM5jTBkAs12rYcw==
   dependencies:
     "@clack/prompts" "0.9.1"
     "@pandacss/is-valid-prop" "0.41.0"
@@ -212,9 +212,9 @@
     zod "^3.23.8"
 
 "@chakra-ui/react@^3.5.1":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/react/-/react-3.8.0.tgz#effb1ef8adf4b1899e6771a57232602eb0ac8b1c"
-  integrity sha512-UOkDxxMYHqQ6z/ExMcLYnjIIj2Ulu6syAkrpSueYmzLlG93cljkMCze5y9GXh/M6fyQEbLBuDVesULTqMmHuiA==
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/react/-/react-3.8.1.tgz#c561b5bc6cc9ec76b2ee40ed26a5d2112731eb5c"
+  integrity sha512-U1SIjSENiJ62tVKGq/fLDcQWSnzjVAsKCqNNIfg5RtPOP4y7j0k//n9HPsmGVLrBEJb5JGSTsudfFen0t/dHBQ==
   dependencies:
     "@ark-ui/react" "4.9.1"
     "@emotion/is-prop-valid" "1.3.1"
@@ -223,6 +223,7 @@
     "@emotion/utils" "1.4.2"
     "@pandacss/is-valid-prop" "0.41.0"
     csstype "3.1.3"
+    fast-safe-stringify "2.1.1"
 
 "@clack/core@0.4.1":
   version "0.4.1"
@@ -2007,16 +2008,16 @@
   integrity sha512-g5y7zc07U9D3esMdqUfTEVu9kMHoIaVBsD0+M3LPdAdD710RpTcLiNvJY1JkYXqkq9+NV+CQoemVNpQPBXVsJg==
 
 "@tanstack/react-query-devtools@^5.66.0":
-  version "5.66.7"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query-devtools/-/react-query-devtools-5.66.7.tgz#3344306c643db65b93c0f9104fb9a13f1a375404"
-  integrity sha512-40z4PPkz06tYIF0vwLZZIZfZxKUH4OAaBOR14blCFyYm6hlU6qc+M82mkZ+D00HcEMhV7P4XeJiEuDhFq0q9Qw==
+  version "5.66.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-devtools/-/react-query-devtools-5.66.8.tgz#1dca5c82e10e8058ed315594ee00bcf719250ac6"
+  integrity sha512-OOdGk4ijs1SEliluWoE5D0ghxwDQz4x2LKzO69K6++VuxtizONXEXtk/oC3QGa9Tru/2CQmsJ5HUk8pmUAi9Qg==
   dependencies:
     "@tanstack/query-devtools" "5.65.0"
 
 "@tanstack/react-query@^5.65.1":
-  version "5.66.7"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.66.7.tgz#ee96c42cc5b4a4447b602eee6e67653268b0ed3a"
-  integrity sha512-qd3q/tUpF2K1xItfPZddk1k/8pSXnovg41XyCqJgPoyYEirMBtB0sVEVVQ/CsAOngzgWtBPXimVf4q4kM9uO6A==
+  version "5.66.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.66.8.tgz#a27494a4ce69c88363eee33637a57e013d7dd5c1"
+  integrity sha512-LqYHYArmM7ycyT1I/Txc/n6KzI8S/hBFw2SQ9Uj1GpbZ89AvZLEvetquiQEHkZ5rFEm+iVNpZ6zYjTiPmJ9N5Q==
   dependencies:
     "@tanstack/query-core" "5.66.4"
 
@@ -3615,9 +3616,9 @@ bufferutil@^4.0.8:
     node-gyp-build "^4.3.0"
 
 bullmq@^5.40.0:
-  version "5.41.2"
-  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-5.41.2.tgz#bccfb0b711655627d7c1b6c01d8798207ce12762"
-  integrity sha512-wqsUIHW2Td86mTKTepqQpKLLUtP4gmX89bUO1YL2fAorxwj3da1GYtroGZMCg/zgB/+zMRsbylL6DHyMUWX7fA==
+  version "5.41.3"
+  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-5.41.3.tgz#840e0cc7be3d6dc02e58d63f62435b7c64efafb5"
+  integrity sha512-tWTeuO/BHDg6gKVnQJMjO42zkhsGss6s4bMdgJU24JVBT53yUvDjaO9H0L/BHKAtsMi4xlxkrDuMNSYWeHlekA==
   dependencies:
     cron-parser "^4.9.0"
     ioredis "^5.4.1"
@@ -5005,7 +5006,7 @@ fast-redact@^3.0.0:
   resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-3.5.0.tgz#e9ea02f7e57d0cd8438180083e93077e496285e4"
   integrity sha512-dwsoQlS7h9hMeYUq1W++23NDcBLV4KqONnITDV9DjfS3q1SgDGVrBdvvTLUotWtPSD7asWDV9/CmsZPy8Hf70A==
 
-fast-safe-stringify@^2.0.6, fast-safe-stringify@^2.0.7:
+fast-safe-stringify@2.1.1, fast-safe-stringify@^2.0.6, fast-safe-stringify@^2.0.7:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
@@ -7517,9 +7518,9 @@ react-hook-form@^7.54.2:
   integrity sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==
 
 react-icons@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.4.0.tgz#443000f6e5123ee1b21ea8c0a716f6e7797f7416"
-  integrity sha512-7eltJxgVt7X64oHh6wSWNwwbKTCtMfK35hcjvJS0yxEAhPM8oUKdS3+kqaW1vicIltw+kR2unHaa12S9pPALoQ==
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.5.0.tgz#8aa25d3543ff84231685d3331164c00299cdfaf2"
+  integrity sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -8956,10 +8957,24 @@ vfile@^6.0.0:
     "@types/unist" "^3.0.0"
     vfile-message "^4.0.0"
 
-viem@^2.1.1, viem@^2.22.17:
+viem@^2.1.1:
   version "2.23.2"
   resolved "https://registry.yarnpkg.com/viem/-/viem-2.23.2.tgz#db395c8cf5f4fb5572914b962fb8ce5db09f681c"
   integrity sha512-NVmW/E0c5crMOtbEAqMF0e3NmvQykFXhLOc/CkLIXOlzHSA6KXVz3CYVmaKqBF8/xtjsjHAGjdJN3Ru1kFJLaA==
+  dependencies:
+    "@noble/curves" "1.8.1"
+    "@noble/hashes" "1.7.1"
+    "@scure/bip32" "1.6.2"
+    "@scure/bip39" "1.5.4"
+    abitype "1.0.8"
+    isows "1.0.6"
+    ox "0.6.7"
+    ws "8.18.0"
+
+viem@^2.22.17:
+  version "2.23.3"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.23.3.tgz#3b8af9490f8f453a17e849d774bea1b5c992738c"
+  integrity sha512-ON/Uybteajqxn3iFyhV/6Ybm+QKhcrsVyTZf/9v2w0CvYQIoyJYCfHSsQR9zpsbOGrR7d2p62w6jzb6fqzzacg==
   dependencies:
     "@noble/curves" "1.8.1"
     "@noble/hashes" "1.7.1"

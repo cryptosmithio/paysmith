@@ -203,7 +203,7 @@ const RequestFundsForm = () => {
               serverState.errors.notes?.toString()
             }
           >
-            <Textarea {...register('notes')} autoresize />
+            <Textarea {...register('notes')} />
           </Field>
         </CardBody>
       </Card.Root>
