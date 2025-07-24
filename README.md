@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💸 PaySmith — Anonymous Payments. Trustless Escrow. Built for Privacy.
 
-## Getting Started
+PaySmith is a next-generation crypto payment platform designed for **privacy-conscious users**, **freelancers**, and **global operators** who need **secure, anonymous transactions** on Ethereum-compatible blockchains.
 
-First, run the development server:
+No KYC. No tracking. No middlemen. Just clean, smart contract–driven payments with built-in escrow and optional third-party arbitration.
+
+> “PaySmith is to private payments what Signal is to private messaging.”
+
+---
+
+## 🚀 Why PaySmith?
+
+Most payment solutions today are surveillance tools with financial features added on. Even in crypto, true privacy is increasingly rare — blocked by compliance, eroded by hosted platforms, or broken by metadata leaks.
+
+**PaySmith changes that** by offering:
+
+| Feature                       | Description                                                                  |
+| ----------------------------- | ---------------------------------------------------------------------------- |
+| 🕵️ Anonymous Payments          | Use stealth addresses, zkSNARKs, and mixers to protect identity              |
+| 🔐 Escrow via Smart Contract   | Lock funds until delivery or service is confirmed                            |
+| ⚖️ Optional Arbitration        | Choose a third-party arbitrator in case of disputes (fee-based)              |
+| 📦 Private Delivery Validation | Encrypted or anonymous verification of product/service completion            |
+| 🔒 Self-Hosted Infrastructure  | No reliance on cloud platforms — full user control and jurisdictional safety |
+
+---
+
+## 🧠 Who Is It For?
+
+- **Freelancers & Gig Workers** in sensitive or grey-zone sectors
+- **High-Value Transactions** like property, art, collectibles, or trust funds
+- **Exporters & Global Operators** needing discreet international settlements
+- **Content Creators & Adult Industry Professionals** seeking anonymous payment rails
+- **Private Investors & Family Offices** who demand privacy, not paperwork
+
+If you’ve ever hesitated to send or receive crypto because of identity exposure, PaySmith is for you.
+
+---
+
+## 🧱 Built With
+
+| Layer           | Stack                                                            |
+| --------------- | ---------------------------------------------------------------- |
+| Frontend        | Next.js + React + TypeScript                                     |
+| Wallets         | Planned: MetaMask, WalletConnect via Wagmi + RainbowKit          |
+| Backend         | Node.js + self-hosted MongoDB (fully encrypted, no hosted APIs)  |
+| Smart Contracts | Solidity (Escrow, Arbitration)                                   |
+| Privacy Layer   | zkSNARKs, stealth addresses, Tornado-style mixers (in progress)  |
+| Hosting         | Fully self-hosted (VPS, privacy-first infra like Njalla/Hetzner) |
+
+The project is self-funded and built solo, with deep focus on sovereignty, clean architecture, and long-term viability.
+
+---
+
+## 🔧 Local Development
+
+To run locally:
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/cryptosmithio/paysmith.git
+cd paysmith
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🤝 How You Can Support or Contribute
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+PaySmith is a solo-built privacy tool — but it's intended for a global audience who *cares* about sovereignty.
 
-## Learn More
+If you're a:
 
-To learn more about Next.js, take a look at the following resources:
+- 🧠 **Solidity developer** interested in escrow or dispute logic
+- 🎨 **Frontend dev** excited about wallet UX or secure flows
+- 🛡️ **Privacy advocate** or zk researcher
+- ✍️ **Writer or explainer** who wants to help people understand DeFi + privacy
+- 🎓 **Student** looking for a meaningful, technically ambitious project to contribute to
+- 💰 **Supporter** who wants to fund tools that protect rights, not sell users
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Reach out, file an issue, or just fork and build. There are no closed doors here — just principled priorities.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🔮 Roadmap (High-Level)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [x] MVP architecture and scope
+- [ ] Smart contract: Escrow
+- [ ] Smart contract: Arbitration
+- [ ] Wallet integration (RainbowKit, Wagmi)
+- [ ] Closed beta with 5–10 users
+- [ ] Launch public v1 with full documentation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛡 Philosophy
+
+**PaySmith is not a startup. It’s a tool for survival.**
+
+You shouldn’t need permission to transact privately.
+You shouldn’t depend on Silicon Valley to hold your keys.
+And you shouldn’t trade your identity just to pay someone.
+
+PaySmith is built on one simple truth:
+
+> **Privacy is not a crime. Sovereignty is not a luxury.**
+
+---
+
+## 🔐 License
+
+MIT — see [`LICENSE.md`](LICENSE.md)
+
+---
+
+Crafted by [CryptoSmith](https://github.com/cryptosmithio) — forging decentralised tools for people who still believe in freedom.
